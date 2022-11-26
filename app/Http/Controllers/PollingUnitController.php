@@ -18,8 +18,10 @@ class PollingUnitController extends Controller
     public function index()
     {
         //
-        $units = PollingUnit::all();
-        if($units){
+        $unit = PollingUnit::all();
+        if($unit){
+            $ward = ''; 
+            $units = array('units'=> $unit, 'ward'=> $ward);
         //return response()->json(['data'=>$unit], 200);
         return view('unit', compact('units'));
         }else{

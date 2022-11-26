@@ -20,7 +20,6 @@ class CreatePollingUnitsTable extends Migration
             $table->id();
             $table->foreignIdFor(LGA::class);
             $table->foreignIdFor(Ward::class);
-            $table->foreignIdFor(State::class);
             $table->string("pu_name");
             $table->bigInteger("pu_number")->nullable();
             $table->bigInteger("gps")->nullable();
