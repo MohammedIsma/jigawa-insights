@@ -28,13 +28,13 @@ Route::get('/try', function () {
 });
 
 Route::get('/dash', [DashboardController::class, 'dash']);
-Route::get('/state', [StateController::class, 'index']);
-Route::get('/lga', [LGAController::class, 'lga']);
-Route::get('/lga/{id}', [LGAController::class, 'showLGAByState']);
-Route::get('/ward', [WardController::class, 'index']);
-Route::get('/ward/{id}', [WardController::class, 'wardByLGA']);
-Route::get('/unit', [PollingUnitController::class, 'index']);
-Route::get('/unit/{id}', [PollingUnitController::class, 'showPollingUnitByLGI']);
+Route::resource('/state', StateController::class);
+//Route::get('/state', [StateController::class, 'index']);
+Route::resource('/lga', LGAController::class);
+
+Route::resource('/ward', WardController::class);
+
+Route::resource('/unit', PollingUnitController::class);
 
 
 Auth::routes();

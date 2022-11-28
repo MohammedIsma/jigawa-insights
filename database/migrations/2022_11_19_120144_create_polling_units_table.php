@@ -18,10 +18,10 @@ class CreatePollingUnitsTable extends Migration
     {
         Schema::create('polling_units', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(LGA::class);
+            $table->foreignId('lga_id');
             $table->foreignIdFor(Ward::class);
-            $table->string("pu_name");
-            $table->bigInteger("pu_number")->nullable();
+            $table->string("name");
+            $table->bigInteger("number")->nullable();
             $table->bigInteger("gps")->nullable();
             $table->timestamps();
         });

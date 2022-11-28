@@ -17,8 +17,8 @@ class CreateWardsTable extends Migration
     {
         Schema::create('wards', function (Blueprint $table) {
             $table->id();
-            $table->string("ward_name");
-            $table->foreignIdFor(LGA::class);
+            $table->string("name");
+            $table->foreignId('lga_id');
             $table->foreignIdFor(State::class);
             $table->timestamps();
         });

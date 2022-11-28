@@ -59,22 +59,10 @@ class PollingUnitController extends Controller
     public function show($id)
     {
         //
-        $units = PollingUnit::findOrFail($id);
-        if($units){
-            //return response()->json(['data'=> $unit]);
-            return view('unit', compact('units'));
-        }else{
-            return response()->json(['message'=> 'unit not found'], 404);
-        }
-    }
-
-    public function showPollingUnitByLGI($id)
-    {
-        //
-        $unit = PollingUnit::where('l_g_a_id',$id)->get();
+        $unit = PollingUnit::where('lga_id',$id)->get();
         if($unit){
             $ward = LGA::find($id); 
-            $units = array('units'=> $unit, 'ward'=> $ward->local_name);
+            $units = array('units'=> $unit, 'ward'=> $ward->name);
             //return response()->json(['units'=> $unit]);
             return view('unit', compact('units'));
         }else{
@@ -82,35 +70,7 @@ class PollingUnitController extends Controller
         }
     }
 
-    public function showPollingUnitByState($id)
-    {
-        //
-        $unit = PollingUnit::where('state_id',$id)->get();
-        if($unit){
-            $state = State::find($id); 
-            $units = array('units'=> $unit, 'state'=> $state->state_name);
-            //return response()->json(['units'=> $unit]);
-            return view('unit', compact('units'));
-        }else{
-            return response()->json(['message'=> 'unit not found'], 404);
-        }
-    }
-
-    public function showPollingUnitByWard($id)
-    {
-        //
-        $unit = PollingUnit::where('ward_id',$id)->get();
-        if($unit){
-            $ward = Ward::find($id); 
-            $units = array('units'=> $unit, 'ward'=> $ward->local_name);
-            //return response()->json(['units'=> $unit]);
-            return view('unit', compact('units'));
-        }else{
-            return response()->json(['message'=> 'unit not found'], 404);
-        }
-    }
-
-
+    
     /**
      * Show the form for editing the specified resource.
      *

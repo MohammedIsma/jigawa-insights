@@ -14,9 +14,9 @@ class CreateLGASTable extends Migration
      */
     public function up()
     {
-        Schema::create('l_g_a_s', function (Blueprint $table) {
+        Schema::create('lgas', function (Blueprint $table) {
             $table->id();
-            $table->string("local_name");
+            $table->string("name");
             $table->foreignIdFor(State::class);
             $table->timestamps();
         });

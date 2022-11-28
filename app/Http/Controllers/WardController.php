@@ -57,7 +57,8 @@ class WardController extends Controller
     public function show($id)
     {
         //
-        $ward = Ward::find($id);
+        $ward = Ward::where('lga_id',$id)
+        ->withCount('pollingUnit')->get();
         if($ward){
             //return response()->json(['data'=> $ward]);
             $lgas = LGA::find($id); 
@@ -70,9 +71,9 @@ class WardController extends Controller
 
     public function wardByLGA($id)
     {
+      
         //
-        $ward = Ward::where('l_g_a_id',$id)
-        ->withCount('pollingUnit')->get();
+        $ward = Ward::find($id);
         if($ward){
             //return response()->json(['data'=> $ward]);
             $lgas = LGA::find($id); 
@@ -80,7 +81,7 @@ class WardController extends Controller
             return view('ward', compact('wards'));
         }else{
             return response()->json(['message'=> 'ward not found'], 404);
-        }
+        }  
     }
 
     /**

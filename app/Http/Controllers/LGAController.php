@@ -15,6 +15,22 @@ class LGAController extends Controller
      */
     public function index()
     {
+        $lga = LGA::withCount(['pollingUnit', 'ward'])->get();
+        if($lga){
+            $state = ''; //$lga->state()->state_name;
+        $lgas = array('lgas'=> $lga, 'state'=> $state);
+        //return response()->json(['data'=>$lga], 200);
+        return view('lga', compact('lgas'));
+        }else{
+            return response()->json(['message'=> 'Record not found'], 404);
+        }
+        
+    }
+
+    public function lga()
+    {
+        //
+        
         //
         $lga = LGA::all();
         if($lga){
@@ -25,20 +41,7 @@ class LGAController extends Controller
         }else{
             return response()->json(['message'=> 'Record not found'], 404);
         }
-    }
-
-    public function lga()
-    {
-        //
-        $lga = LGA::withCount(['pollingUnit', 'ward'])->get();
-        if($lga){
-            $state = ''; //$lga->state()->state_name;
-        $lgas = array('lgas'=> $lga, 'state'=> $state);
-        //return response()->json(['data'=>$lga], 200);
-        return view('lga', compact('lgas'));
-        }else{
-            return response()->json(['message'=> 'Record not found'], 404);
-        }
+        
     }
 
     /**
@@ -71,17 +74,6 @@ class LGAController extends Controller
     public function show($id)
     {
         //
-        $lga = LGA::find($id);
-        if($lga){
-            return response()->json(['data'=> $lga]);
-        }else{
-            return response()->json(['message'=> 'Record not found'], 404);
-        }
-    }
-
-    public function showLGAByState($id)
-    {
-        //
         $lga = LGA::where('state_id',$id)
         ->withCount(['pollingUnit', 'ward'])->get( );
         
@@ -93,6 +85,19 @@ class LGAController extends Controller
         }else{
             return response()->json(['message'=> 'Record not found'], 404);
         }
+    }
+
+    public function showLGAByState($id)
+    {
+        
+        //
+        $lga = LGA::find($id);
+        if($lga){
+            return response()->json(['data'=> $lga]);
+        }else{
+            return response()->json(['message'=> 'Record not found'], 404);
+        }
+        
     }
 
     /**

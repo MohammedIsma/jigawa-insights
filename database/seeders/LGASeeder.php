@@ -24,25 +24,25 @@ class LGASeeder extends Seeder
         while (($data = fgetcsv($csvData, 4523, ',')) !== false) {
             if (!$transRow) {
                 $State = State::firstOrCreate([
-                    'state_name' => $data[1]
+                    'name' => $data[1]
                 ]);
                 
                 $LGA = LGA::firstOrCreate([
                     'state_id' => $State->id,
-                    'local_name' => $data[2],
+                    'name' => $data[2],
                     
                 ]);
 
                 $ward = Ward::firstOrCreate([
-                    'l_g_a_id' => $LGA->id,
+                    'lga_id' => $LGA->id,
                     'state_id' => $State->id,
-                    'ward_name' => $data[3]
+                    'name' => $data[3]
                 ]);
 
                 PollingUnit::firstOrCreate([
-                    'pu_name' => $data[4],
+                    'name' => $data[4],
                     'ward_id' => $ward->id,
-                    'l_g_a_id'  => $LGA->id
+                    'lga_id'  => $LGA->id
                 ]);
             }
             $transRow = false;
