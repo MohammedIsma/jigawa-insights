@@ -14,14 +14,9 @@ class StateController extends Controller
      */
     public function index()
     {
-        //
-        $state = State::all();
-        if($state){
-        //return response()->json(['data'=>$state], 200);
-        return view('state', compact('state'));
-        }else{
-            return response()->json(['message'=> 'Record not found'], 404);
-        }
+        $states = State::all();
+        $params['States'] = $states;
+        return view('states.index', $params);
     }
 
     /**

@@ -29,7 +29,8 @@ Route::get('/try', function () {
 });
 
 Route::get('/dash', [DashboardController::class, 'dash']);
-Route::resource('/state', StateController::class);
+
+Route::resource('/states', StateController::class);
 //Route::get('/state', [StateController::class, 'index']);
 Route::resource('/lga', LGAController::class);
 
