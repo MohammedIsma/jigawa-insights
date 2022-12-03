@@ -43,6 +43,8 @@ Route::get('/ward/officials/{ward}', [OfficialController::class, 'officialsByWar
 Route::get('/unit/officials/{unit}', [OfficialController::class, 'officialsByUnit']);
 
 
-Auth::routes();
+Auth::routes([
+    "register"=>false
+]);
 
 Route::get('/home',[DashboardController::class, 'dash']); //[App\Http\Controllers\HomeController::class, 'index'])->name('home');

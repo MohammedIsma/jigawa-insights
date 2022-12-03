@@ -26,11 +26,10 @@ class LGASeeder extends Seeder
                 $State = State::firstOrCreate([
                     'name' => $data[1]
                 ]);
-                
+
                 $LGA = LGA::firstOrCreate([
                     'state_id' => $State->id,
                     'name' => $data[2],
-                    
                 ]);
 
                 $ward = Ward::firstOrCreate([
