@@ -1,9 +1,6 @@
 <?php
 
-use App\Models\Official;
-use App\Models\State;
-use App\Models\User;
-use App\Models\Ward;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,9 +16,9 @@ class CreateOfficialTypesTable extends Migration
     {
         Schema::create('official_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Official::class);
-            $table->foreignIdFor(Ward::class, State::class);
+            $table->string('slug');
+            $table->boolean('internal')->default(false);
+            $table->string('name');
             $table->timestamps();
         });
     }

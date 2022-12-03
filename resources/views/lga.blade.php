@@ -11,6 +11,7 @@
               <th scope="col">LGA</th>
               <th scope="col">Ward</th>
               <th scope="col">Polling Unit</th>
+              <th scope="col">Officials</th>
             </tr>
           </thead>
           <tbody>
@@ -23,6 +24,8 @@
             </td>
                 <td> {{$lg->polling_unit_count}} PU
                     <a class="text-decoration-none" href="{{ url('/unit/'.$lg->id.'/') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">View</a>
+            </td><td>
+                    <a class="text-decoration-none" href="{{ url('/lga/officials/'.$lg->id.'/') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">View</a>
             </td>
             </tr>
            @endforeach
