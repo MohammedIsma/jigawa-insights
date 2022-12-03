@@ -16,8 +16,8 @@ class CreateLGASTable extends Migration
     {
         Schema::create('lgas', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
             $table->foreignIdFor(State::class);
+            $table->string("name");
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateLGASTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('l_g_a_s');
+        Schema::dropIfExists('lgas');
     }
 }

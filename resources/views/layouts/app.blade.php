@@ -124,6 +124,12 @@
         Polling Unit
       </a>
     </li>
+    <li>
+      <a href="{{ url('officials') }}" class="nav-link ">
+        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+        Official List
+      </a>
+    </li>
   </ul>
   <hr>
   <div class="dropdown">
