@@ -13,18 +13,16 @@ class Ward extends Model
         'ward_name',
     ];
 
-    public function pollingUnit()
-    {
-        return $this->hasMany(PollingUnit::class);
-    }
 
-    public function state()
-    {
+
+    public function State(){
         return $this->belongsTo(State::class);
     }
-    public function lga()
-    {
+    public function LGA(){
         return $this->belongsTo(LGA::class, 'lga_id', 'id');
+    }
+    public function PollingUnits(){
+        return $this->hasMany(PollingUnit::class);
     }
 
 }

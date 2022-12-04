@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LGA;
+use App\Models\PollingUnit;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -27,5 +28,11 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    
+
+    public function show_all()
+    {
+        $params['PUs'] = PollingUnit::take(100)->get();
+        return view('show_all', $params);
+    }
+
 }

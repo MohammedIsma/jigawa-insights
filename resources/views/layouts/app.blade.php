@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/assets/css/footer.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/ataru.css">
     <link rel="icon" type="image/png" href="/assets/images/favicon.svg">
     <title>Jigawa Insights</title>
 </head>
@@ -49,7 +50,7 @@
                             </div>
 
                             <form class="search-bar d-flex">
-                                <img src="assets/images/icon/search-normal.svg" alt="search-normal">
+                                <img src="/assets/images/icon/search-normal.svg" alt="search-normal">
 
                                 <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                             </form>
@@ -76,7 +77,7 @@
 
                             <div class="header-right-option dropdown profile-nav-item pt-0 pb-0">
                                 <a class="dropdown-item dropdown-toggle avatar d-flex align-items-center" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="assets/images/avatar.png" alt="avatar">
+                                    <img src="/assets/images/avatar.png" alt="avatar">
                                     <div class="d-none d-lg-block d-md-block">
                                         <h3>{{ auth()->user()->name }}</h3>
                                         <span>Admin</span>
@@ -86,7 +87,7 @@
                                 <div class="dropdown-menu">
                                     <div class="dropdown-header d-flex flex-column align-items-center">
                                         <div class="figure mb-3">
-                                            <img src="assets/images/avatar.png" class="rounded-circle" alt="avatar">
+                                            <img src="/assets/images/avatar.png" class="rounded-circle" alt="avatar">
                                         </div>
 
                                         <div class="info text-center">
@@ -154,18 +155,18 @@
             @yield("content")
         </main>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/metismenu.min.js"></script>
-    <script src="assets/js/simplebar.min.js"></script>
-    <script src="assets/js/geticons.js"></script>
-    <script src="assets/js/sweetalert2.all.min.js"></script>
-    <script src="assets/js/jbox.all.min.js"></script>
-    <script src="assets/js/editor.js"></script>
-    <script src="assets/js/form-validator.min.js"></script>
-    <script src="assets/js/contact-form-script.js"></script>
-    <script src="assets/js/ajaxchimp.min.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/metismenu.min.js"></script>
+    <script src="/assets/js/simplebar.min.js"></script>
+    <script src="/assets/js/geticons.js"></script>
+    <script src="/assets/js/sweetalert2.all.min.js"></script>
+    <script src="/assets/js/jbox.all.min.js"></script>
+    <script src="/assets/js/editor.js"></script>
+    <script src="/assets/js/form-validator.min.js"></script>
+    <script src="/assets/js/contact-form-script.js"></script>
+    <script src="/assets/js/ajaxchimp.min.js"></script>
+    <script src="/assets/js/custom.js"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
                                 <li class="mm-active">
                                     <a href="#" class="has-arrow box-style d-flex align-items-center" aria-expanded="true">
                                         <div class="icon">
-                                            <img src="assets/images/icon/element.svg" alt="element">
+                                            <img src="/assets/images/icon/element.svg" alt="element">
                                         </div>
                                         <span class="menu-title">Dashboards</span>
                                     </a>
@@ -35,43 +35,20 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#" class="has-arrow box-style d-flex align-items-center">
+                                    <a href="{{ route('states.show', 1) }}" class="box-style d-flex align-items-center">
                                         <div class="icon">
-                                            <img src="assets/images/icon/element.svg" alt="element">
+                                            <img src="/assets/images/icon/element.svg" alt="element">
                                         </div>
-                                        <span class="menu-title">Records</span>
+                                        <span class="menu-title">Locations</span>
                                     </a>
-                                    <ul class="sidemenu-nav-second-level">
-                                        <li>
-                                            <a href="{{ url('state') }}">
-                                                <span class="menu-title">State</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ url('lga') }}">
-                                                <span class="menu-title">LGAs</span>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="{{ url('ward') }}">
-                                                <span class="menu-title">Wards</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ url('unit') }}">
-                                                <span class="menu-title">Polling Units</span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li>
-                                    <a href="calendar.html" class="box-style d-flex align-items-center">
+                                    <a href="{{ route('show_all_summary') }}" class="box-style d-flex align-items-center">
                                         <div class="icon">
-                                            <img src="assets/images/icon/calendar.svg" alt="calendar">
+                                            <img src="/assets/images/icon/element.svg" alt="element">
                                         </div>
-                                        <span class="menu-title">Calendar</span>
+                                        <span class="menu-title">Summary</span>
                                     </a>
-                                </li>
                                 </li>
                             </ul>
                         </div>

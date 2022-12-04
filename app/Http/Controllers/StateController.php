@@ -10,7 +10,7 @@ class StateController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -44,18 +44,13 @@ class StateController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
-        $state = State::find($id);
-        if($state){
-            return response()->json(['data'=> $state]);
-        }else{
-            return response()->json(['message'=> 'state not found'], 404);
-        }
-
+        $State = State::findOrFail($id);
+        $params['State'] = $State;
+        return view('states.show', $params);
     }
 
     /**

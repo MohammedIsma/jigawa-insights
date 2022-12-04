@@ -11,7 +11,7 @@
                             @foreach($state as $st)
                             <li class="mb-1">
                                 <a href="/">
-                                    <img src="assets/images/icon/folder-2.svg" alt="folder-2">
+                                    <img src="/assets/images/icon/folder-2.svg" alt="folder-2">
                                     {{$st->name}} State
                                 </a>
                             </li>
@@ -31,7 +31,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/file.svg" alt="file">
+                                        <img src="/assets/images/file/file.svg" alt="file">
                                     </div>
                                     <h6>{{ $lga->name }}</h6>
                                     <span>{{ $lga->ward->count() }} Wards</span>
@@ -58,7 +58,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/file.svg" alt="file">
+                                        <img src="/assets/images/file/file.svg" alt="file">
                                     </div>
                                     <h6>Project Work</h6>
                                     <span>05 Files</span>
@@ -85,7 +85,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -101,7 +101,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/word.svg" alt="file">
+                                        <img src="/assets/images/file/word.svg" alt="file">
                                     </div>
                                     <h6>Presentation</h6>
                                     <span>05 Files</span>
@@ -112,7 +112,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/pdf.svg" alt="file">
+                                        <img src="/assets/images/file/pdf.svg" alt="file">
                                     </div>
                                     <h6>Pdf Files</h6>
                                     <span>05 Files</span>
@@ -143,7 +143,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -159,7 +159,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/file.svg" alt="file">
+                                        <img src="/assets/images/file/file.svg" alt="file">
                                     </div>
                                     <h6>Proposal</h6>
                                     <span>05 Files</span>
@@ -171,7 +171,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -187,7 +187,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/open-file.svg" alt="file">
+                                        <img src="/assets/images/file/open-file.svg" alt="file">
                                     </div>
                                     <h6>Project Work</h6>
                                     <span>05 Files</span>
@@ -199,7 +199,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -215,7 +215,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/doc.svg" alt="file">
+                                        <img src="/assets/images/file/doc.svg" alt="file">
                                     </div>
                                     <h6>Writing File</h6>
                                     <span>05 Files</span>
@@ -227,7 +227,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -243,7 +243,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/pdf.svg" alt="file">
+                                        <img src="/assets/images/file/pdf.svg" alt="file">
                                     </div>
                                     <h6>Pdf Files</h6>
                                     <span>05 Files</span>
@@ -255,7 +255,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -271,7 +271,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/excel.svg" alt="file">
+                                        <img src="/assets/images/file/excel.svg" alt="file">
                                     </div>
                                     <h6>Management Sheet</h6>
                                     <span>05 Files</span>
@@ -283,7 +283,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -299,7 +299,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/open-file.svg" alt="file">
+                                        <img src="/assets/images/file/open-file.svg" alt="file">
                                     </div>
                                     <h6>Project Work</h6>
                                     <span>05 Files</span>
@@ -311,7 +311,7 @@
                                 <div class="single-folder">
                                     <div class="dropdown text-end">
                                         <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="assets/images/icon/dots.svg" alt="dots">
+                                            <img src="/assets/images/icon/dots.svg" alt="dots">
                                         </button>
 
                                         <div class="dropdown-menu">
@@ -327,7 +327,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center file">
-                                        <img src="assets/images/file/open-file.svg" alt="file">
+                                        <img src="/assets/images/file/open-file.svg" alt="file">
                                     </div>
                                     <h6>Personal Folder</h6>
                                     <span>05 Files</span>

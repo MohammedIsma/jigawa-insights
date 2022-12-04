@@ -19,7 +19,7 @@ class WardController extends Controller
         $ward = Ward::withCount('pollingUnit')->get();
         if($ward){
         //return response()->json(['data'=>$ward], 200);
-        $lgas = ''; 
+        $lgas = '';
         $wards = array('wards'=> $ward, 'lgas'=> $lgas);
         return view('ward', compact('wards'));
         }else{
@@ -52,36 +52,28 @@ class WardController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
+        $Ward = Ward::findOrFail($id);
+        $params['Ward'] = $Ward;
+        return view('wards.show', $params);
+    }
+
+    public function wardByLGA($id)
+    {
+
         //
-        $ward = Ward::where('lga_id',$id)
-        ->withCount('pollingUnit')->get();
+        $ward = Ward::find($id);
         if($ward){
             //return response()->json(['data'=> $ward]);
-            $lgas = LGA::find($id); 
+            $lgas = LGA::find($id);
         $wards = array('wards'=> $ward, 'lgas'=> $lgas->local_name);
             return view('ward', compact('wards'));
         }else{
             return response()->json(['message'=> 'ward not found'], 404);
         }
-    }
-
-    public function wardByLGA($id)
-    {
-      
-        //
-        $ward = Ward::find($id);
-        if($ward){
-            //return response()->json(['data'=> $ward]);
-            $lgas = LGA::find($id); 
-        $wards = array('wards'=> $ward, 'lgas'=> $lgas->local_name);
-            return view('ward', compact('wards'));
-        }else{
-            return response()->json(['message'=> 'ward not found'], 404);
-        }  
     }
 
     /**
