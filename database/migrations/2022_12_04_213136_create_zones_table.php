@@ -1,13 +1,12 @@
 <?php
 
-use App\Models\LGA;
 use App\Models\State;
-use App\Models\Zone;
+use App\Models\Ward;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWardsTable extends Migration
+class CreateZonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +15,12 @@ class CreateWardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wards', function (Blueprint $table) {
+        Schema::create('zones', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
             $table->foreignId('lga_id');
+            $table->foreignIdFor(Ward::class);
             $table->foreignIdFor(State::class);
-            $table->foreignIdFor(Zone::class);
+            $table->string("name");
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateWardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wards');
+        Schema::dropIfExists('zones');
     }
 }

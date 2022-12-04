@@ -21,4 +21,9 @@ class State extends Model
     {
         return $this->hasMany(Ward::class);
     }
+
+    public function zone()
+    {
+        return $this->hasMany(Zone::class);
+    }
 }

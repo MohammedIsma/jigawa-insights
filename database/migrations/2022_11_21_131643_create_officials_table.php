@@ -5,6 +5,7 @@ use App\Models\OfficialType;
 use App\Models\PollingUnit;
 use App\Models\State;
 use App\Models\Ward;
+use App\Models\Zone;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,7 @@ class CreateOfficialsTable extends Migration
             $table->id();
             $table->foreignIdFor(OfficialType::class);
             $table->foreignIdFor(State::class)->nullable();
+            $table->foreignIdFor(Zone::class);
             $table->foreignId('lga_id');
             $table->foreignIdFor(Ward::class)->nullable();
             $table->foreignIdFor(PollingUnit::class)->nullable();

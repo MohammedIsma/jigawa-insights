@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\State;
+use App\Models\Zone;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,7 @@ class CreateLGASTable extends Migration
         Schema::create('lgas', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(State::class);
+            $table->foreignIdFor(Zone::class);
             $table->string("name");
             $table->timestamps();
         });

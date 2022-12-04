@@ -20,7 +20,7 @@ class OfficialController extends Controller
      */
     public function index()
     {
-        //
+        
         $officials = Official::all();
         if($officials){
         return view('officials', compact('officials',));

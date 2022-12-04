@@ -10,6 +10,10 @@ class PollingUnit extends Model
     use HasFactory;
 
 
+    public function zone(){
+        return $this->belongsTo(Zone::class);
+    }
+    
     public function LGA(){
         return $this->belongsTo(LGA::class, 'lga_id', 'id');
     }

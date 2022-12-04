@@ -3,6 +3,7 @@
 use App\Models\LGA;
 use App\Models\State;
 use App\Models\Ward;
+use App\Models\Zone;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,7 @@ class CreatePollingUnitsTable extends Migration
             $table->id();
             $table->foreignId('lga_id');
             $table->foreignIdFor(Ward::class);
+            $table->foreignIdFor(Zone::class);
             $table->string("name");
             $table->bigInteger("number")->nullable();
             $table->bigInteger("gps")->nullable();

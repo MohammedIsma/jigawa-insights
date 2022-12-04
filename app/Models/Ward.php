@@ -18,6 +18,11 @@ class Ward extends Model
     public function State(){
         return $this->belongsTo(State::class);
     }
+
+    public function zone(){
+        return $this->belongsTo(Zone::class);
+    }
+
     public function LGA(){
         return $this->belongsTo(LGA::class, 'lga_id', 'id');
     }
