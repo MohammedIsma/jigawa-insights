@@ -18,18 +18,13 @@
                                     </a>
                                     <ul class="sidemenu-nav-second-level mm-collapse mm-show">
                                         <li>
-                                            <a href="website-analytics.html">
-                                                <span class="menu-title">Website Analytics</span>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="hr-management.html">
-                                                <span class="menu-title">HR Management</span>
+                                            <a href="#">
+                                                <span class="menu-title">Dashboard</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tutor-lms.html">
-                                                <span class="menu-title">Tutor LMS</span>
+                                            <a href="#">
+                                                <span class="menu-title">Analysis Dashboard</span>
                                             </a>
                                         </li>
                                     </ul>
