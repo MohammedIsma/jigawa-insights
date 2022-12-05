@@ -19,10 +19,10 @@ class OfficialTypeSeeder extends Seeder
         OfficialType::insert([
             [ "slug" => "fg_inec_official", "internal"=> false, "name"=> "INEC Official"],
             [ "slug" => "fg_state_official", "internal"=> false, "name"=> "State Electoral Officer"],
-            [ "slug" => "fg_part_official", "internal"=> false, "name"=> "Party Offficial"],
-            [ "slug" => "fg_internal_commettee", "internal"=> true, "name"=> "Commettee Memeber"],
-            [ "slug" => "fg_internal_champion", "internal"=> true, "name"=> "Champion"],
-            [ "slug" => "fg_internal_volunteer", "internal"=> true, "name"=> "Volunteer"],
+            [ "slug" => "party_official", "internal"=> false, "name"=> "Party Offficial"],
+            [ "slug" => "committee_member", "internal"=> true, "name"=> "Committee Member"],
+            [ "slug" => "committee_officer", "internal"=> true, "name"=> "Committee Officer"],
+            [ "slug" => "volunteer", "internal"=> true, "name"=> "Volunteer"],
         ]);
     }
 }

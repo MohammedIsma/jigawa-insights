@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
             OfficialTypeSeeder::class,
             UserSeeder::class,
         ]);
+
+        $this->call( OfficialsSeeder::class );
     }
 }

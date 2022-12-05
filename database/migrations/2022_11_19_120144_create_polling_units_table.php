@@ -23,6 +23,7 @@ class CreatePollingUnitsTable extends Migration
             $table->string("name");
             $table->bigInteger("number")->nullable();
             $table->bigInteger("gps")->nullable();
+            $table->bigInteger("voter_count")->nullable();
             $table->timestamps();
         });
     }

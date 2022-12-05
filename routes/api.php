@@ -34,3 +34,5 @@ Route::get('/ward', [WardController::class, 'index']);
 
 Route::get('/pu/{id}', [PollingUnitController::class, 'show']);
 Route::get('/pu', [PollingUnitController::class, 'index']);
+
+Route::get('/ajx_get_lgas', [LGAController::class, 'ajx_get_lgas']);

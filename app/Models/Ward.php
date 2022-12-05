@@ -25,4 +25,14 @@ class Ward extends Model
         return $this->hasMany(PollingUnit::class);
     }
 
+    public function Officials(){
+        return Official::where(function($query){
+            return $query->whereNull("polling_unit_id")->where("ward_id", $this->id);
+        })->where(function($query){
+            return $query->whereNull("ward_id")->where("lga_id", $this->id);
+        })->orWhere(function($query){
+            return $query->whereNull("lga_id")->where("state_id", $this->state_id);
+        })->get();
+    }
+
 }

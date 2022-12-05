@@ -32,6 +32,7 @@ Route::group(["middleware"=>"auth"], function() {
 
     Route::get('/all', [HomeController::class, 'show_all'])->name("show_all_summary");
 
+    Route::get('/exec_dash', [DashboardController::class, 'exec_dash'])->name('exec_dash');
     Route::resource('/states', StateController::class);
     Route::resource('/lga', LGAController::class);
     Route::resource('/ward', WardController::class);

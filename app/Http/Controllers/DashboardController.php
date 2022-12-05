@@ -27,8 +27,12 @@ class DashboardController extends Controller
         //return response()->json($totals);
         return view('dash', compact('totals'));
         }else{
-            
+
             return response()->json(['message'=> 'Record not found'], 404);
         }
+    }
+
+    public function exec_dash(){
+        return view("exec_dashboard");
     }
 }

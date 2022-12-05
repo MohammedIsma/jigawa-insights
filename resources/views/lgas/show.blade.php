@@ -27,7 +27,7 @@
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="single-device border-style-fec107">
                                                 <span class="title">Registered Voters</span>
-                                                <p class="h4">0</p>
+                                                <p class="h4">{{ number_format($LGA->PollingUnits->sum('voter_count')) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -41,36 +41,24 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <p class="h5">Key People (3)</p>
+                                <p class="h5">Key People ({{ count($LGA->Officials()) }})</p>
                                 <div class="row justify-content-center">
+                                    @foreach($LGA->Officials() as $Official)
                                     <div class="col-lg-4 col-md-6 col-12">
-                                        <div class="single-friend rank2">
+                                        <div class="single-friend rank{{$Official->ranking}}">
                                             <div class="friend-content p-2">
                                                 <div class="d-flex justify-content-between">
-                                                    <h3><a href="#">Mohammed T Isma</a></h3>
+                                                    <h3><a href="#">{{ $Official->name }}</a> <span style="color:#369;font-size:.8em;"><small>{{$Official->phone_number}}</small></span></h3>
                                                 </div>
                                                 <ul class="info mt-0">
                                                     <li class="p-0">
-                                                        <i class="ri-mail-line"></i> INEC Official
+                                                        <i class="ri-mail-line"></i> {{ $Official->OfficialType->name }}
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-12">
-                                        <div class="single-friend rank4">
-                                            <div class="friend-content p-2">
-                                                <div class="d-flex justify-content-between">
-                                                    <h3><a href="#">Mohammed T Isma</a></h3>
-                                                </div>
-                                                <ul class="info mt-0">
-                                                    <li class="p-0">
-                                                        <i class="ri-mail-line"></i> INEC Official
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

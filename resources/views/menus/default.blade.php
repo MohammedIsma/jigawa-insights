@@ -23,7 +23,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ route('exec_dash') }}">
                                                 <span class="menu-title">Analysis Dashboard</span>
                                             </a>
                                         </li>

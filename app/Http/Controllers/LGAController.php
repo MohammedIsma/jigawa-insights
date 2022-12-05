@@ -27,21 +27,15 @@ class LGAController extends Controller
 
     }
 
-    public function lga()
+    public function ajx_get_lgas()
     {
-        //
-
-        //
         $lga = LGA::all();
-        if($lga){
-            $state = '';
-        $lgas = array('lgas'=> $lga, 'state'=> $state);
-        //return response()->json(['data'=>$lga], 200);
-        return view('lga', compact('lgas'));
-        }else{
-            return response()->json(['message'=> 'Record not found'], 404);
-        }
-
+        return [
+            "success" => true,
+            "payload" => [
+                "LGAs" => $lga
+            ]
+        ];
     }
 
     /**

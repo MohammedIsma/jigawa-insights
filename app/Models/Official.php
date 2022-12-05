@@ -19,4 +19,8 @@ class Official extends Model
         'ward_id',
         'pollingUnit_id',
     ];
+
+    public function OfficialType(){
+        return $this->belongsTo(OfficialType::class);
+    }
 }

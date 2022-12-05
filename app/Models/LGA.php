@@ -12,8 +12,18 @@ class LGA extends Model
     {
         return $this->belongsTo(State::class);
     }
-    public function PollingUnits()
-    {
+
+    public function Officials(){
+        return Official::where(function($query){
+                return $query->whereNull("ward_id")->where("lga_id", $this->id);
+            })
+            ->orWhere(function($query){
+                return $query->whereNull("lga_id")->where("state_id", $this->state_id);
+            })
+            ->get();
+    }
+
+    public function PollingUnits(){
         return $this->hasMany(PollingUnit::class, 'lga_id', 'id');
     }
     public function Wards(): \Illuminate\Database\Eloquent\Relations\HasMany

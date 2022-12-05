@@ -22,9 +22,10 @@ class CreateOfficialsTable extends Migration
             $table->id();
             $table->foreignIdFor(OfficialType::class);
             $table->foreignIdFor(State::class)->nullable();
-            $table->foreignId('lga_id');
+            $table->foreignId('lga_id')->nullable();
             $table->foreignIdFor(Ward::class)->nullable();
             $table->foreignIdFor(PollingUnit::class)->nullable();
+            $table->integer('ranking')->default(0);
             $table->string('name');
             $table->string('phone_number');
             $table->string('designation');
