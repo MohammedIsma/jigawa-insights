@@ -3,7 +3,7 @@
 @section('content')
 <div class="row  text-center text-decoration-none">
      <div class="col p-4">
-        <a href="{{ url('state') }}" class="text-decoration-none">
+        <a href="{{ url('state/1') }}" class="text-decoration-none">
         <div class="card mb-5 rounded-3 shadow-sm border-primary">
           <div class="card-header py-3 text-bg-primary border-primary">
             <h4 class="my-0 fw-normal">Registered States   </h4>
