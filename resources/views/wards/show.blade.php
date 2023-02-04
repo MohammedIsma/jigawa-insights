@@ -41,7 +41,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <p class="h5">Key People (3)</p>
+                                <p class="h5">Key People ({{ count($Ward->Officials()) }})</p>
                                 <div class="row justify-content-center">
                                     @foreach($Ward->Officials() as $Official)
                                         <div class="col-lg-4 col-md-6 col-12">
