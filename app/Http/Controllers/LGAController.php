@@ -15,7 +15,7 @@ class LGAController extends Controller
      */
     public function index()
     {
-        $lga = LGA::withCount(['pollingUnit', 'ward'])->get();
+        $lga = LGA::withCount(['PollingUnits', 'Wards'])->get();
         if($lga){
             $state = ''; //$lga->state()->state_name;
         $lgas = array('lgas'=> $lga, 'state'=> $state);
