@@ -1,19 +1,24 @@
-.confidence_card{
-    background-color: #eeeeee;
-    border:4px solid #ccc;
-    border-radius: 50%;
-    font-size:3em;
-    font-weight:bold;
-    height: 100px;
+.accreditation_card{
+    background-color: #000000;
+    border-radius: 2px;
+    border:1px solid #888;
     text-align: center;
-    vertical-align: middle;
-    width: 100px;
+    min-width: 200px;
 }
-.confidence_card span{
+.accreditation_card span.heading{
     display: block;
-    font-size:10px;
-    margin-top: -15px;
-    margin-bottom: 15px;
+    font-size:1.1em;
+    padding-left: 7px;
+    padding-top: 3px;
+    text-align: left;
+}
+.accreditation_card span.label{
+    display: block;
+    font-weight:bold;
+    font-size:2em;
+}
+.accreditation_card span.voters{
+    font-size:1.1em;
 }
 
 .confidence_card.rank0{ background-color: rgba(0, 0, 0, 1); border-color:#000000; color: #fff; }

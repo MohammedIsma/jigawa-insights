@@ -21,9 +21,11 @@ class CreatePollingUnitsTable extends Migration
             $table->foreignId('lga_id');
             $table->foreignIdFor(Ward::class);
             $table->string("name");
-            $table->bigInteger("number")->nullable();
+            $table->string("number")->nullable();
             $table->bigInteger("gps")->nullable();
             $table->bigInteger("voter_count")->nullable();
+            $table->bigInteger("accredited_count_1")->nullable();
+            $table->bigInteger("accredited_count_2")->nullable();
             $table->timestamps();
         });
     }

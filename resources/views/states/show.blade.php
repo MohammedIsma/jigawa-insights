@@ -10,16 +10,16 @@
                         <hr />
                         <div class="row">
                             @foreach($State->lga as $lga)
-                                <div class="col-xxl-1 col-md-2 col-sm-4 mb-5">
+                                <div class="col-xxl-1 col-md-2 col-sm-4 m-1 p-4" style="border:1px solid #f00;">
                                     <div class="single-folder text-center">
                                         <a href="{{ route('lga.show', $lga->id) }}">
                                             <div class="file">
                                                 <img src="/assets/images/file/file.svg" alt="file" width="50" />
                                             </div>
-                                            <h6 class="mb-0">{{ $lga->name }}</h6>
+                                            <h5 class="mb-0 text-white">{{ $lga->name }}</h5>
                                         </a>
                                         <span>{{ $lga->Wards->count() }} Wards</span>
-                                        <div>{{ $lga->Wards->count() * rand(112,528) }} voters</div>
+                                        <div>{{ number_format(\App\Models\PollingUnit::where('lga_id', $lga->id)->sum('voter_count')) }} voters</div>
                                     </div>
                                 </div>
                             @endforeach

@@ -6,42 +6,50 @@
             <div class="content-sright">
                 <div class="my-file-area">
                     <div class="quick-access">
-                        <p class="h5">WARD: <strong>{{$Ward->name}}</strong> Overview</p>
-                        <hr />
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                <div class="device-content card-box-style">
+                                <div class="device-content card-box-style pt-3 pb-0 px-3">
+                                    <p class="h5 text-center">&gt;&gt; {{ $Ward->name }} &lt;&lt;</p>
                                     <div class="row justify-content-center">
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="single-device">
-                                                <span class="title">LGA</span>
+                                                <span class="title text-black">LGA</span>
                                                 <h4>{{ $Ward->LGA->name }}</h4>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="single-device border-style-4fcb8d">
-                                                <span class="title">Polling Unit Count</span>
+                                                <span class="title text-black">Polling Unit Count</span>
                                                 <h4>{{ number_format($Ward->PollingUnits->count()) }}</h4>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="single-device border-style-fec107">
-                                                <span class="title">Registered Voters</span>
-                                                <p class="h4">{{ $Ward->PollingUnits->sum('voter_count') }}</p>
+                                                <span class="title text-black">Registered Voters</span>
+                                                <p class="h4">{{ number_format($Ward->PollingUnits->sum('voter_count')) }}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-1 offset-md-4">
-                                <div class="confidence_card rank0">
-                                    0<span>unranked</span>
+                            <div class="col-12 col-md-2">
+                                <div class="accreditation_card">
+                                    <span class="heading">Accreditation</span>
+                                    <span class="label">23%</span>
+                                    <span class="voters">525 voters</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="accreditation_card">
+                                    <span class="heading">Results</span>
+                                    <span class="label">23%</span>
+                                    <span class="voters">APC => 21,885</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
-                                <p class="h5">Key People (3)</p>
+                            <div class="col-3">
+                                <p class="h5 text-warning">Key People</p>
                                 <div class="row justify-content-center">
                                     @foreach($Ward->Officials() as $Official)
                                         <div class="col-lg-4 col-md-6 col-12">
@@ -61,24 +69,33 @@
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="h5">PUs in {{$Ward->name}}</p>
+                            <div class="col-9">
+                                <p class="h5 text-warning">PUs in {{$Ward->name}} ({{ $Ward->PollingUnits->count() }})</p>
                                 <div class="row">
-                                    @foreach($Ward->PollingUnits as $PU)
-                                        <div class="col-xxl-1 col-md-2 col-sm-4 mb-5">
-                                            <div class="single-folder text-center">
-                                                <a href="{{ route('pu.show', $PU->id) }}">
-                                                    <div class="file">
-                                                        <img src="/assets/images/file/file.svg" alt="file" width="50" />
-                                                    </div>
-                                                    <h6 class="mb-0">{{ $PU->name }}</h6>
-                                                </a>
-                                                <div>{{ number_format(rand(112,5281)) }} voters</div>
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div class="bg-white">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>DELIM.</th>
+                                                    <th>PU</th>
+                                                    <th>Reg. Voters</th>
+                                                    <th>Acc. Voters</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($Ward->PollingUnits as $PU)
+                                                    <tr>
+                                                        <td>{{ $PU->number }}</td>
+                                                        <td>{{ $PU->name }}</td>
+                                                        <td>{{ $PU->voter_count }}</td>
+                                                        <td>{{ $PU->voter_count }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
