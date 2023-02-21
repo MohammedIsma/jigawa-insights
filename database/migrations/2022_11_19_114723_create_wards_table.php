@@ -20,6 +20,9 @@ class CreateWardsTable extends Migration
             $table->string("name");
             $table->foreignId('lga_id');
             $table->foreignIdFor(State::class);
+            $table->bigInteger("voter_count")->nullable();
+            $table->bigInteger("accredited_count_1")->nullable();
+            $table->bigInteger("accredited_count_2")->nullable();
             $table->timestamps();
         });
     }

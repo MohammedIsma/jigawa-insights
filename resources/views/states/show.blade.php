@@ -6,8 +6,6 @@
             <div class="content-sright">
                 <div class="my-file-area">
                     <div class="quick-access">
-                        <p class="h5">{{$State->name}} State LGAs</p>
-                        <hr />
                         <div class="row">
                             @foreach($State->lga as $lga)
                                 <div class="col-xxl-1 col-md-2 col-sm-4 m-1 p-4" style="border:1px solid #f00;">

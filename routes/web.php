@@ -7,6 +7,7 @@ use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\PollingUnitController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\WardController;
+use App\Jobs\UpdateCounts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/test', function () {
+    UpdateCounts::dispatch();
 });
 
 Route::group(["middleware"=>"auth"], function() {

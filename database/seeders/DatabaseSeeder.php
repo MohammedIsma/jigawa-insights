@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Jobs\UpdateCounts;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,7 +18,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             OfficialTypeSeeder::class,
+            PoliticalPartiesSeeder::class,
             LGASeeder::class,
         ]);
+        UpdateCounts::dispatch();
     }
 }

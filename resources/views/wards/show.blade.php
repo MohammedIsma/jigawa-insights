@@ -36,7 +36,7 @@
                                 <div class="accreditation_card">
                                     <span class="heading">Accreditation</span>
                                     <span class="label">23%</span>
-                                    <span class="voters">525 voters</span>
+                                    <span class="voters">{{ $Ward->accreditation_count_1 }} voters</span>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
@@ -80,7 +80,7 @@
                                                     <th>DELIM.</th>
                                                     <th>PU</th>
                                                     <th>Reg. Voters</th>
-                                                    <th>Acc. Voters</th>
+                                                    <th class="text-center">Accreditation</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -89,7 +89,10 @@
                                                         <td>{{ $PU->number }}</td>
                                                         <td>{{ $PU->name }}</td>
                                                         <td>{{ $PU->voter_count }}</td>
-                                                        <td>{{ $PU->voter_count }}</td>
+                                                        <td class="text-center">
+                                                            {{ $PU->accreditated_count_1 ?? 0 }}
+                                                            <span class="text-{{getAccClass($PU->accreditation_percentage)}}"><small>({{ $PU->accreditation_percentage }})%</small></span>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ward extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 
     protected $fillable = [
         'ward_name',
@@ -33,6 +33,13 @@ class Ward extends Model
         })->orWhere(function($query){
             return $query->whereNull("lga_id")->where("state_id", $this->state_id);
         })->get();
+    }
+
+    public function getAccreditationPercentageAttribute($value){
+        $pu_count = $this->PollingUnits->count();
+        $acc_count = AccreditationResult::where('ward_id', $this->id)->count();
+
+        return ($acc_count/$pu_count) * 100;
     }
 
 }

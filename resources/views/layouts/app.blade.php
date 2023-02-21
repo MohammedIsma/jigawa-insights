@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <main class="main-content-wrap" style="background-color:#2C3E50;color:#fff;padding:0;">
+        <main class="main-content-wrap" style="background-color:#2C3E50;color:#fff;padding:0;padding-top:20px;">
             @yield("content")
         </main>
     </div>

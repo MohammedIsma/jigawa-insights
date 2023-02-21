@@ -4,23 +4,6 @@
 	// Sidebar Menu JS
 	$('#sidebar-menu').metisMenu();
 
-	// Header Sticky, Go To Top JS
-	$(window).on('scroll', function() {
-		// Header Sticky JS
-		if ($(this).scrollTop() >150){
-			$('.header-area').addClass("is-sticky");
-		}
-
-		else{
-			$('.header-area').removeClass("is-sticky");
-		};
-
-		// Go To Top JS
-		var scrolled = $(window).scrollTop();
-		if (scrolled > 300) $('.go-top').addClass('active');
-		if (scrolled < 300) $('.go-top').removeClass('active');
-	});
-
 	// Click Event JS
 	$('.go-top').on('click', function() {
 		$("html, body").animate({ scrollTop: "0" }, 50);

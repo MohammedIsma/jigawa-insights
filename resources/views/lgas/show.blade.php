@@ -36,7 +36,7 @@
                                 <div class="accreditation_card">
                                     <span class="heading">Accreditation</span>
                                     <span class="label">0%</span>
-                                    <span class="voters">0 voters</span>
+                                    <span class="voters">{{ $LGA->accreditation_count_1 }} voters</span>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
