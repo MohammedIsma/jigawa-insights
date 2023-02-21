@@ -11,3 +11,13 @@ function getAccClass($cl){
         return "success";
     }
 }
+
+function getTurnClass($cl){
+    if($cl<50){
+        return "danger";
+    }elseif($cl<75){
+        return "info";
+    }else{
+        return "success text-white";
+    }
+}

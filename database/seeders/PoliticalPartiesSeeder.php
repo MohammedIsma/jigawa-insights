@@ -15,7 +15,7 @@ class PoliticalPartiesSeeder extends Seeder
     public function run()
     {
         PoliticalParty::truncate();
-        PoliticalParty::create([
+        PoliticalParty::insert([
             [ "slug" => "apc" , "name" => "All Progressives Congress"],
             [ "slug" => "pdp" , "name" => "People's Democratic Party"],
             [ "slug" => "nnpp" , "name" => "NNPP"],

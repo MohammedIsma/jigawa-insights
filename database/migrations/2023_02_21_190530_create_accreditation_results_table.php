@@ -23,7 +23,8 @@ class CreateAccreditationResultsTable extends Migration
             $table->foreignIdFor(LGA::class, "lga_id");
             $table->foreignIdFor(Ward::class);
             $table->foreignIdFor(PollingUnit::class);
-            $table->integer("count");
+            $table->integer("voter_count");
+            $table->integer("accredited_count");
             $table->timestamps();
         });
     }

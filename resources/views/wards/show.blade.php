@@ -18,15 +18,15 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <div class="single-device border-style-4fcb8d">
-                                                <span class="title text-black">Polling Unit Count</span>
-                                                <h4>{{ number_format($Ward->PollingUnits->count()) }}</h4>
+                                            <div class="single-device border-style-fec107">
+                                                <span class="title text-black">Registered Voters</span>
+                                                <p class="h4">{{ number_format($Ward->PollingUnits->sum('voter_count')) }}</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="single-device border-style-fec107">
-                                                <span class="title text-black">Registered Voters</span>
-                                                <p class="h4">{{ number_format($Ward->PollingUnits->sum('voter_count')) }}</p>
+                                                <span class="title text-black">Turnout</span>
+                                                <p class="h4">{{ $Ward->turnout }}%</p>
                                             </div>
                                         </div>
                                     </div>
@@ -35,15 +35,18 @@
                             <div class="col-12 col-md-2">
                                 <div class="accreditation_card">
                                     <span class="heading">Accreditation</span>
-                                    <span class="label">23%</span>
-                                    <span class="voters">{{ $Ward->accreditation_count_1 }} voters</span>
+                                    <span class="label">
+                                        {{ $Ward->accreditation_percentage }}%
+                                        <span style="font-size:.7em;">reported</span>
+                                    </span>
+                                    <span class="voters">{{ number_format($Ward->accredited_voters) }} voters</span>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="accreditation_card">
                                     <span class="heading">Results</span>
-                                    <span class="label">23%</span>
-                                    <span class="voters">APC => 21,885</span>
+                                    <span class="label">0%</span>
+                                    <span class="voters">APC => 0</span>
                                 </div>
                             </div>
                         </div>
@@ -81,6 +84,7 @@
                                                     <th>PU</th>
                                                     <th>Reg. Voters</th>
                                                     <th class="text-center">Accreditation</th>
+                                                    <th class="text-center">Turnout</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -90,9 +94,10 @@
                                                         <td>{{ $PU->name }}</td>
                                                         <td>{{ $PU->voter_count }}</td>
                                                         <td class="text-center">
-                                                            {{ $PU->accreditated_count_1 ?? 0 }}
+                                                            {{ $PU->accredited_count_1 ?? 0}}
                                                             <span class="text-{{getAccClass($PU->accreditation_percentage)}}"><small>({{ $PU->accreditation_percentage }})%</small></span>
                                                         </td>
+                                                        <td class="text-center bg-{{ getTurnClass($PU->turnout) }}">{{ $PU->turnout }}%</td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>

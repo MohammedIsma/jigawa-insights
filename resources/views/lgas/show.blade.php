@@ -35,8 +35,11 @@
                             <div class="col-12 col-md-2">
                                 <div class="accreditation_card">
                                     <span class="heading">Accreditation</span>
-                                    <span class="label">0%</span>
-                                    <span class="voters">{{ $LGA->accreditation_count_1 }} voters</span>
+                                    <span class="label">
+                                        {{ round($LGA->accreditation_percentage, 2) }}%
+                                        <span style="font-size:.7em;">reported</span>
+                                    </span>
+                                    <span class="voters">{{ $LGA->accredited_voters }} voters</span>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
@@ -67,8 +70,13 @@
                                                     </div>
                                                     <h6 class="text-white mb-0">{{ $Ward->name }}</h6>
                                                 </a>
-                                                <span>{{ $Ward->PollingUnits->count() }} PUs</span>
-                                                <div>{{ number_format(\App\Models\PollingUnit::where('ward_id', $Ward->id)->sum('voter_count')) }} voters</div>
+                                                <span class="mx-2"><i class="fa fa-box"></i> {{ $Ward->PollingUnits->count() }} PUs</span>
+                                                <span class="mx-2"><i class="fa fa-user"></i> {{ number_format(\App\Models\PollingUnit::where('ward_id', $Ward->id)->sum('voter_count')) }}</span>
+                                                <div>
+                                                    {{ round($Ward->accreditation_percentage,1) }}%
+                                                    <span style="font-size:.7em;">reported</span>
+                                                    <span class="mx-2 text-success"><i class="fa fa-user"></i> {{ number_format($Ward->accredited_voters) }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach

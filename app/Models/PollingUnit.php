@@ -19,8 +19,21 @@ class PollingUnit extends Model
     }
 
     public function getAccreditationPercentageAttribute($value){
-        $acc_count = AccreditationResult::where('polling_unit_id', $this->id)->count();
 
-        return ($acc_count/1) * 100;
+        $Res = AccreditationResult::where('polling_unit_id', $this->id)->first();
+        if(!$Res){
+            return 0;
+        }
+        return 100;
+    }
+
+    public function getTurnoutAttribute($value){
+
+        $Res = AccreditationResult::where('polling_unit_id', $this->id)->first();
+        if(!$Res){
+            return 0;
+        }
+
+        return round(($Res->accredited_count/$Res->voter_count) * 100, 2);
     }
 }

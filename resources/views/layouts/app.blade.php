@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="/assets/css/jbox.all.min.css">
     <link rel="stylesheet" href="/assets/css/editor.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/loaders.css">
     <link rel="stylesheet" href="/assets/css/header.css">
     <link rel="stylesheet" href="/assets/css/sidebar-menu.css">
@@ -24,6 +23,7 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <link rel="stylesheet" href="/assets/css/ataru.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="icon" type="image/png" href="/assets/images/favicon.svg">
     <title>Jigawa Insights</title>
 </head>
@@ -32,20 +32,7 @@
         <img src="/image/Ataru.jpg" alt="main-logo">
     </div>
     <div class="all-section-area">
-        <div class="header-area p-2" style="background-color: #fff;">
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <p class="h4">JIGAWA INSIGHTS</p>
-                </div>
-                <div class="col-12 col-md-4">
-
-                </div>
-                <div class="col-12 col-md-4 text-right">
-                    {{ auth()->user()->name }}
-                </div>
-            </div>
-        </div>
-        <main class="main-content-wrap" style="background-color:#2C3E50;color:#fff;padding:0;padding-top:20px;">
+        <main class="main-content-wrap" style="background-color:#2C3E50;color:#fff;padding:0;">
             @yield("content")
         </main>
     </div>
