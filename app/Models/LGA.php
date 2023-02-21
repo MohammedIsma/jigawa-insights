@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LGA extends Model
 {
     protected $table = 'lgas';
+    protected $guarded = [];
 
     public function State()
     {
@@ -29,5 +30,12 @@ class LGA extends Model
     public function Wards(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Ward::class, 'lga_id', 'id');
+    }
+
+    public function getAccreditationPercentageAttribute($value){
+        $pu_count = $this->PollingUnits->count();
+        $acc_count = AccreditationResult::where('lga_id', $this->id)->count();
+
+        return ($acc_count/$pu_count) * 100;
     }
 }

@@ -41,7 +41,9 @@ class LGASeeder extends Seeder
                 PollingUnit::firstOrCreate([
                     'name' => $data[4],
                     'ward_id' => $ward->id,
-                    'lga_id'  => $LGA->id
+                    'lga_id'  => $LGA->id,
+                    'number'  => $data[5],
+                    'voter_count'  => $data[6]
                 ]);
             }
             $transRow = false;

@@ -17,4 +17,10 @@ class PollingUnit extends Model
     public function Ward(){
         return $this->belongsTo(Ward::class);
     }
+
+    public function getAccreditationPercentageAttribute($value){
+        $acc_count = AccreditationResult::where('polling_unit_id', $this->id)->count();
+
+        return ($acc_count/1) * 100;
+    }
 }

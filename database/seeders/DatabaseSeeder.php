@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Jobs\UpdateCounts;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,11 +16,11 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-            LGASeeder::class,
-            OfficialTypeSeeder::class,
             UserSeeder::class,
+            OfficialTypeSeeder::class,
+            PoliticalPartiesSeeder::class,
+            LGASeeder::class,
         ]);
-
-        $this->call( OfficialsSeeder::class );
+        UpdateCounts::dispatch();
     }
 }
