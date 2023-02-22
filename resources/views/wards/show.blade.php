@@ -80,6 +80,7 @@
                                             <table class="table">
                                                 <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>DELIM.</th>
                                                     <th>PU</th>
                                                     <th>Reg. Voters</th>
@@ -90,6 +91,15 @@
                                                 <tbody>
                                                 @foreach($Ward->PollingUnits as $PU)
                                                     <tr>
+                                                        <td>
+                                                            @if($PU->accredited_count_1)
+                                                                <span class="text-success">
+                                                                    <i class="fa fa-check"></i> Accredited
+                                                                </span>
+                                                            @else
+                                                                <a target="_blank" href="{{ route('submit_accreditation', $PU->id) }}" class="btn btn-sm btn-success px-4 py-1">Submit Accreditation</a>
+                                                            @endif
+                                                        </td>
                                                         <td>{{ $PU->number }}</td>
                                                         <td>{{ $PU->name }}</td>
                                                         <td>{{ $PU->voter_count }}</td>

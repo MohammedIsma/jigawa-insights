@@ -42,6 +42,8 @@ Route::group(["middleware"=>"auth"], function() {
     Route::resource('/ward', WardController::class);
     Route::resource('/pu', PollingUnitController::class);
 
+    Route::get('/submit/accreditation/{pu_id}', [PollingUnitController::class, 'submit_accreditation'])->name("submit_accreditation");
+    Route::post('/submit/accreditation/{pu_id}', [PollingUnitController::class, 'fn_submit_accreditation'])->name("submit_accreditation");
 
     Route::resource('/officials', OfficialController::class);
     Route::get('/state/officials/{state}', [OfficialController::class, 'officialsByState']);

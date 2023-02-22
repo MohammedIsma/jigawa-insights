@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UpdateCounts;
+use App\Models\AccreditationResult;
 use App\Models\LGA;
 use App\Models\PollingUnit;
 use App\Models\State;
@@ -20,7 +22,7 @@ class PollingUnitController extends Controller
         //
         $unit = PollingUnit::all();
         if($unit){
-            $ward = ''; 
+            $ward = '';
             $units = array('units'=> $unit, 'ward'=> $ward);
         //return response()->json(['data'=>$unit], 200);
         return view('unit', compact('units'));
@@ -61,7 +63,7 @@ class PollingUnitController extends Controller
         //
         $unit = PollingUnit::where('lga_id',$id)->get();
         if($unit){
-            $ward = LGA::find($id); 
+            $ward = LGA::find($id);
             $units = array('units'=> $unit, 'ward'=> $ward->name);
             //return response()->json(['units'=> $unit]);
             return view('unit', compact('units'));
@@ -70,7 +72,7 @@ class PollingUnitController extends Controller
         }
     }
 
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -98,10 +100,37 @@ class PollingUnitController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function destroy($id)
+    public function submit_accreditation(Request $request, $pu_id)
     {
-        //
+        $PU = PollingUnit::findOrFail($pu_id);
+        $params = [
+            "PU" => $PU
+        ];
+        return view("pu.accredit", $params);
+    }
+
+    public function fn_submit_accreditation(Request $request, $pu_id)
+    {
+        $PU = PollingUnit::findOrFail($pu_id);
+        $post = $request->all();
+        $count = $post['acc_count'];
+        $Result = AccreditationResult::updateOrCreate([
+            "state_id" => 1,
+            "lga_id" => $PU->lga_id,
+            "ward_id" => $PU->ward_id,
+            "polling_unit_id" => $PU->id
+        ],[
+            "count" => $count
+        ]);
+
+        $PU->update([
+            "accredited_count_1" => $count
+        ]);
+
+        UpdateCounts::dispatchSync([$PU->ward_id]);
+
+        return redirect()->back();
     }
 }

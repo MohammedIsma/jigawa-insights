@@ -20,9 +20,17 @@ class UpdateCounts implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
+    protected $Wards;
+    protected $LGAs;
+
+    public function __construct($ward_ids=null){
+        if($ward_ids){
+            $this->Wards = Ward::whereIn('id', $ward_ids)->get();
+            $this->LGAs = LGA::whereIn('id', $this->Wards->pluck('lga_id')->toArray())->get();
+        }else{
+            $this->Wards = Ward::all();
+            $this->LGAs = LGA::all();
+        }
     }
 
     /**
@@ -32,7 +40,7 @@ class UpdateCounts implements ShouldQueue
      */
     public function handle()
     {
-        foreach(Ward::all() as $W){
+        foreach($this->Wards as $W){
             $W->update([
                 "voter_count" => $W->PollingUnits->sum("voter_count"),
                 "accredited_count_1" => $W->PollingUnits->sum("accredited_count_1"),
@@ -40,7 +48,7 @@ class UpdateCounts implements ShouldQueue
             ]);
         }
 
-        foreach(LGA::all() as $L){
+        foreach($this->LGAs as $L){
             $L->update([
                 "voter_count" => $L->Wards->sum("voter_count"),
                 "accredited_count_1" => $L->Wards->sum("accredited_count_1"),

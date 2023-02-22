@@ -41,6 +41,6 @@ class LGA extends Model
 
     public function getAccreditedVotersAttribute($value){
         $ACC = AccreditationResult::where('lga_id', $this->id)->first();
-        return $ACC ? $ACC->sum('accredited_count') : 0;
+        return $ACC ? $ACC->sum('count') : 0;
     }
 }

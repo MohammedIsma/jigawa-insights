@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PollingUnit extends Model
 {
-    use HasFactory;
-
+    protected $guarded = [];
 
     public function LGA(){
         return $this->belongsTo(LGA::class, 'lga_id', 'id');
@@ -27,13 +26,19 @@ class PollingUnit extends Model
         return 100;
     }
 
+    public function getAccreditedVotersAttribute($value){
+        $ACC = AccreditationResult::where('polling_unit_id', $this->id)->first();
+        return $ACC ? $ACC->count : 0;
+    }
+
     public function getTurnoutAttribute($value){
 
         $Res = AccreditationResult::where('polling_unit_id', $this->id)->first();
+
         if(!$Res){
             return 0;
         }
 
-        return round(($Res->accredited_count/$Res->voter_count) * 100, 2);
+        return round(($Res->count/$this->voter_count) * 100, 2);
     }
 }

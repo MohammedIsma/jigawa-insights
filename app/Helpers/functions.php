@@ -12,12 +12,14 @@ function getAccClass($cl){
     }
 }
 
-function getTurnClass($cl){
+function getTurnClass($cl, $whitetxt=true){
+    $twhite = $whitetxt ? "text-white" : "";
+
     if($cl<50){
         return "danger";
     }elseif($cl<75){
         return "info";
     }else{
-        return "success text-white";
+        return "success $twhite";
     }
 }
