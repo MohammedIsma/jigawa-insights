@@ -17,6 +17,10 @@ class PollingUnit extends Model
         return $this->belongsTo(Ward::class);
     }
 
+    public function AccreditationResult(){
+        return $this->hasOne(AccreditationResult::class, "polling_unit_id", "id");
+    }
+
     public function getAccreditationPercentageAttribute($value){
 
         $Res = AccreditationResult::where('polling_unit_id', $this->id)->first();

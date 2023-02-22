@@ -36,7 +36,7 @@ class LGA extends Model
         $pu_count = $this->PollingUnits->count();
         $acc_count = AccreditationResult::where('lga_id', $this->id)->count();
 
-        return ($acc_count/$pu_count) * 100;
+        return round(($acc_count/$pu_count) * 100, 1);
     }
 
     public function getAccreditedVotersAttribute($value){

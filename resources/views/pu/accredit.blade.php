@@ -42,11 +42,12 @@
                                                                     <span class="h5 bg-{{getTurnClass($PU->accreditation_percentage)}} px-2">{{ $PU->accredited_voters }} Voters Accredited</span>
                                                                     <span class="text-{{getTurnClass($PU->turnout, false)}} px-2">{{ $PU->turnout }}% turnout</span>
                                                                 </div>
-
-
                                                             @endif
                                                         </td>
                                                     </tr>
+                                                    @if($PU->accredited_voters)
+                                                    <tr><th>Accreditation Submitted by</th><td></td><td>{{ $PU->AccreditationResult->User->name }}</td></tr>
+                                                    @endif
                                                 </table>
                                             </form>
                                         </div>

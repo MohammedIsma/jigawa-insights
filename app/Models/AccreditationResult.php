@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class AccreditationResult extends Model
 {
     protected $guarded = [];
+
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }

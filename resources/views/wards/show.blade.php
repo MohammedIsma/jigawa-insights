@@ -6,10 +6,17 @@
             <div class="content-sright">
                 <div class="my-file-area">
                     <div class="quick-access">
+                        <div class="row text-center">
+                            <div class="col-12">
+                                <a class="btn btn-light" href="{{ route("lga.show", $Ward->lga_id) }}"><i class="fa fa-arrow-left"></i>
+                                    {{ $Ward->LGA->name }} L.G</a>
+                            </div>
+                        </div>
+                        <hr />
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="device-content card-box-style pt-3 pb-0 px-3">
-                                    <p class="h5 text-center">&gt;&gt; {{ $Ward->name }} &lt;&lt;</p>
+                                    <p class="h2 text-center">&gt;&gt; {{ $Ward->name }} Ward &lt;&lt;</p>
                                     <div class="row justify-content-center">
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="single-device">
