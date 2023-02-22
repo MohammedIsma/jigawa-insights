@@ -3,6 +3,7 @@
 use App\Models\LGA;
 use App\Models\PollingUnit;
 use App\Models\State;
+use App\Models\User;
 use App\Models\Ward;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -24,6 +25,7 @@ class CreateAccreditationResultsTable extends Migration
             $table->foreignIdFor(Ward::class);
             $table->foreignIdFor(PollingUnit::class);
             $table->foreignIdFor(User::class);
+            $table->integer("box_count");
             $table->integer("voter_count");
             $table->integer("accredited_count");
             $table->timestamps();

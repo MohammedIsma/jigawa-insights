@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\PoliticalParty;
+use App\Models\PollingUnit;
+use App\Models\VotingResult;
+
 function getAccClass($cl){
     if($cl<25){
         return "danger";
@@ -22,4 +26,18 @@ function getTurnClass($cl, $whitetxt=true){
     }else{
         return "success $twhite";
     }
+}
+
+
+function canUpdatePollingUnit(PollingUnit $pu){
+    return in_array($pu->ward_id, auth()->user()->allowed_wards);
+}
+
+function getVoteCount(PollingUnit $pu, PoliticalParty $p=null){
+    $Result = VotingResult::where("polling_unit_id", $pu->id);
+    if($p){
+        $Result = $Result->where("political_party_id", $p->id);
+    }
+
+    return $Result->sum("count");
 }

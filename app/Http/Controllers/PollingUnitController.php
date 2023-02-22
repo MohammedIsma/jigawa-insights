@@ -7,6 +7,7 @@ use App\Models\AccreditationResult;
 use App\Models\LGA;
 use App\Models\PollingUnit;
 use App\Models\State;
+use App\Models\VotingResult;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 
@@ -116,6 +117,7 @@ class PollingUnitController extends Controller
         $PU = PollingUnit::findOrFail($pu_id);
         $post = $request->all();
         $count = $post['acc_count'];
+        $box_count = $post['box_count'];
         $Result = AccreditationResult::updateOrCreate([
             "state_id" => 1,
             "lga_id" => $PU->lga_id,
@@ -123,12 +125,36 @@ class PollingUnitController extends Controller
             "polling_unit_id" => $PU->id
         ],[
             "count" => $count,
+            "box_count" => $box_count,
             "user_id" => auth()->user()->id,
         ]);
 
         $PU->update([
             "accredited_count_1" => $count
         ]);
+
+        UpdateCounts::dispatchSync([$PU->ward_id]);
+
+        return redirect()->back();
+    }
+
+    public function fn_submit_results(Request $request, $pu_id)
+    {
+        $PU = PollingUnit::findOrFail($pu_id);
+        $post = $request->all();
+
+        foreach($post['vote_tally'] as $pid=>$tally) {
+            $Result = VotingResult::updateOrCreate([
+                "state_id" => 1,
+                "lga_id" => $PU->lga_id,
+                "ward_id" => $PU->ward_id,
+                "polling_unit_id" => $PU->id,
+                "political_party_id" => $pid
+            ], [
+                "count" => $tally,
+                "user_id" => auth()->user()->id,
+            ]);
+        }
 
         UpdateCounts::dispatchSync([$PU->ward_id]);
 

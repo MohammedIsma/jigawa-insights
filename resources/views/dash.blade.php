@@ -1,59 +1,59 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row  text-center text-decoration-none">
-     <div class="col p-4">
-        <a href="{{ url('state') }}" class="text-decoration-none">
-        <div class="card mb-5 rounded-3 shadow-sm border-primary">
+<div class="row text-decoration-none">
+     <div class="col-12 col-md-4">
+        <div class="card mb-5 rounded-3 shadow-sm border-primary text-left">
           <div class="card-header py-3 text-bg-primary border-primary">
-            <h4 class="my-0 fw-normal">Registered States   </h4>
+            <h4 class="my-0 fw-normal">Your Profile</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{$totals['state']}} <small class="text-muted fw-light">State</small></h1>
-            
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th><td>{{ auth()->user()->name }}</td>
+                </tr>
+                <tr>
+                    <th>Responsibility</th>
+                    <td>
+                        <table width="100%">
+                        <?php $l = "";?>
+                        @foreach(auth()->user()->AllowedWards() as $W)
+                                @if($W->lga_id!=$l)
+                                    <tr><th colspan="2"><strong><u>{{ $W->LGA->name }} LG</u></strong></th></tr>
+                                    <?php $l = $W->lga_id;?>
+                                @endif
+                                <tr>
+                                    <td>&middot; <a href="/ward/{{ $W->id }}">{{ $W->name }}</a></td>
+                                    <td style="text-align:right;">
+                                        @if($W->accreditation_percentage==100)
+                                            <span class="text-success">
+                                                <i class="fa fa-pen-alt"></i>
+                                                <small><small>accreditation done</small></small>
+                                            </span>
+                                        @else
+                                            <span class="text-warning">
+                                                <i class="fa fa-pen-alt"></i>
+                                                <small>{{ $W->accreditation_percentage }}%</small>
+                                            </span>
+                                        @endif
+                                        <span class="text-warning"><i class="fa fa-vote-yea"></i></span>
+                                    </td>
+                                </tr>
+                            </tr>
+                        @endforeach
+                        </table>
+                    </td>
+                </tr>
+            </table>
           </div>
         </div>
-        </a>
       </div>
+    <div class="col-12 col-md-8">
+        <div class="card mb-5 rounded-3 shadow-sm border-primary text-left">
+          <div class="card-body">
 
-      <div class="col p-4">
-      <a href="{{ url('lga') }}" class="text-decoration-none">
-        <div class="card mb-5 rounded-3 shadow-sm border-primary">
-          <div class="card-header py-3 text-bg-primary border-primary">
-            <h4 class="my-0 fw-normal">Registered LGAs   </h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{$totals['lga']}} <small class="text-muted fw-light">LGAs</small></h1>
-            
           </div>
         </div>
-      </a>
-      </div>
-      <div class="col p-4">
-      <a href="{{ url('ward') }}" class="text-decoration-none">
-        <div class="card mb-5 rounded-3 shadow-sm border-primary">
-          <div class="card-header py-3 text-bg-primary border-primary">
-            <h4 class="my-0 fw-normal">Registered Wards   </h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{$totals['ward']}} <small class="text-muted fw-light">Wards</small></h1>
-            
-          </div>
-        </div>
-      </a>
-      </div>
-      <div class="col p-4">
-      <a href="{{ url('unit') }}" class="text-decoration-none">
-        <div class="card mb-5 rounded-3 shadow-sm border-primary">
-          <div class="card-header py-3 text-bg-primary border-primary">
-            <h4 class="my-0 fw-normal">Total Polling Units   </h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{$totals['unit']}} <small class="text-muted fw-light"> PUnit</small></h1>
-            
-          </div>
-        </div>
-      </a>
       </div>
 </div>
 @endsection

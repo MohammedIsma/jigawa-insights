@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $casts = [
+        "allowed_lgas" => "array",
+        "allowed_wards" => "array",
+        'email_verified_at' => 'datetime',
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -33,12 +38,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function AllowedWards(){
+        $allowed = $this->allowed_wards ?? [];
+        return Ward::whereIn("id", $allowed)->orderBy("lga_id")->get();
+    }
 }

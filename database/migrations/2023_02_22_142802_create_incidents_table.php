@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePoliticalPartiesTable extends Migration
+class CreateIncidentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePoliticalPartiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('political_parties', function (Blueprint $table) {
+        Schema::create('incidents', function (Blueprint $table) {
             $table->id();
-            $table->string("logo")->nullable();
-            $table->string("slug");
-            $table->string("name");
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreatePoliticalPartiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('political_parties');
+        Schema::dropIfExists('incidents');
     }
 }

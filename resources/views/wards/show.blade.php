@@ -104,7 +104,9 @@
                                                                     <i class="fa fa-check"></i> Accredited
                                                                 </span>
                                                             @else
+                                                                @if(canUpdatePollingUnit($PU))
                                                                 <a target="_blank" href="{{ route('submit_accreditation', $PU->id) }}" class="btn btn-sm btn-success px-4 py-1">Submit Accreditation</a>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td>{{ $PU->number }}</td>

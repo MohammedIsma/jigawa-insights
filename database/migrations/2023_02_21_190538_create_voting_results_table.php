@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\LGA;
+use App\Models\PoliticalParty;
 use App\Models\PollingUnit;
 use App\Models\State;
 use App\Models\Ward;
@@ -22,6 +23,7 @@ class CreateVotingResultsTable extends Migration
             $table->foreignIdFor(State::class);
             $table->foreignIdFor(LGA::class, "lga_id");
             $table->foreignIdFor(Ward::class);
+            $table->foreignIdFor(PoliticalParty::class);
             $table->foreignIdFor(PollingUnit::class);
             $table->integer("count");
             $table->timestamps();
