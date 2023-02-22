@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped" style="height: 100vh;">
         <colgroup>
             <col width="20%">
             <col width="10%">
@@ -11,29 +11,30 @@
             <col width="10%">
             <col width="10%">
         </colgroup>
+        <tr class="text-white text-uppercase" style="border-bottom: none;">
+            <th class="text-black text-center">{{  time }}</th>
+            <th class="bg-primary text-center" colspan="2"></th>
+            <th class="bg-success text-center" colspan="3">ACCREDITATION</th>
+            <th class="bg-warning text-center" colspan="2"></th>
+        </tr>
         <tr class="text-white text-uppercase" style="border-bottom: 5px solid #000;">
-            <th></th>
-            <th class="bg-primary text-center">VoterCount</th>
-            <th class="bg-info text-center">Confidence</th>
-            <th class="bg-success text-center">Gov. Personnel</th>
-            <th class="bg-warning text-center">Party Personnel</th>
-            <th class="bg-info text-center">Committee Cs.</th>
-            <th class="bg-dark text-center">HUMINT</th>
-            <th class="bg-secondary text-center">SIGINT</th>
-            <th class="bg-light text-dark text-center">OSINT</th>
-            <th></th>
+            <th>LGA</th>
+            <th class="bg-primary text-center">Polling Units</th>
+            <th class="bg-primary text-center">Registered Voters</th>
+            <th class="bg-success text-center">Reported</th>
+            <th class="bg-success text-center">Turnout</th>
+            <th class="bg-success text-center">Voters</th>
+            <th class="bg-warning text-center" colspan="2"></th>
         </tr>
         <tr v-for="LGA in LGAs">
             <th>{{ LGA.name }}</th>
-            <td class="text-center rank_cell">{{ generateNumber() }}</td>
-            <td class="text-center rank_cell rank3">?</td>
-            <td class="text-center rank_cell" :class="'rank'+generateRank()"></td>
-            <td class="text-center rank_cell" :class="'rank'+generateRank()"></td>
-            <td class="text-center rank_cell" :class="'rank'+generateRank()"></td>
-            <td class="text-center rank_cell" :class="'rank'+generateRank()"></td>
-            <td class="text-center rank_cell" :class="'rank'+generateRank()"></td>
-            <td class="text-center rank_cell" :class="'rank'+generateRank()"></td>
-            <td></td>
+            <td class="text-center rank_cell">{{ LGA.polling_unit_count }}</td>
+            <td class="text-center rank_cell">{{ LGA.voter_count }}</td>
+            <td class="text-center rank_cell">{{ LGA.reported_pu_count }}</td>
+            <td class="text-center rank_cell" :class="{'text-danger':LGA.turnout<76}">{{ LGA.turnout }}%</td>
+            <td class="text-center rank_cell">{{ LGA.accredited_count }}</td>
+            <td class="text-center rank_cell"></td>
+            <td class="text-center rank_cell"></td>
         </tr>
     </table>
 </template>
@@ -44,6 +45,7 @@ export default {
     components: {},
     data(){
         return {
+            time: "",
             LGAs: []
         }
     },
@@ -62,22 +64,28 @@ export default {
                 .then(response => {
                     var rData = response.data;
                     this.LGAs = rData.payload.LGAs
+                    this.time = rData.payload.time
                     this.loading = false
                 })
                 .catch(error => {
                     this.loading = false
                 }).finally({
-
             });
+            setTimeout(function () { this.loadLGAs() }.bind(this), 5000)
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
+body{
+    font-family: Arial !important;
+}
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 .rank_cell{
     border-left:1px solid #ccc !important;
-    height:50px;
 }
 .rank_cell.rank0{ background-color: rgba(0,0,0,.5); }
 .rank_cell.rank1{ background-color: rgba(170,0,0,.5); }

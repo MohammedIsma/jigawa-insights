@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LGAResource;
 use App\Models\LGA;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -29,11 +30,12 @@ class LGAController extends Controller
 
     public function ajx_get_lgas()
     {
-        $lga = LGA::all();
+        $lgas = LGA::all();
         return [
             "success" => true,
             "payload" => [
-                "LGAs" => $lga
+                "LGAs" => LGAResource::collection($lgas),
+                "time" => date("H:i:s - dM")
             ]
         ];
     }
