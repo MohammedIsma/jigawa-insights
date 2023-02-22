@@ -41,3 +41,12 @@ function getVoteCount(PollingUnit $pu, PoliticalParty $p=null){
 
     return $Result->sum("count");
 }
+
+function VoteResults(PollingUnit $pu, PoliticalParty $p=null){
+    $Result = VotingResult::where("polling_unit_id", $pu->id);
+    if($p){
+        $Result = $Result->where("political_party_id", $p->id);
+    }
+
+    return $Result->orderBy("count", "desc")->get();
+}

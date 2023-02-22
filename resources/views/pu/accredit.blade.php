@@ -106,10 +106,11 @@
                                                 @if($PU->VotingResults)
                                                     <div class="alert alert-success">
                                                         <table class="table">
-                                                            @foreach(PoliticalParty::all() as $Party)
+                                                            @foreach(VoteResults($PU) as $Result)
                                                                 <tr>
-                                                                    <td>{{ $Party->name }}</td>
-                                                                    <td>{{ getVoteCount($PU, $Party) }}</td>
+                                                                    <td>{{ $Result->Party->name }}</td>
+                                                                    <td>{{ $Result->count }}</td>
+
                                                                 </tr>
                                                             @endforeach
                                                         </table>
