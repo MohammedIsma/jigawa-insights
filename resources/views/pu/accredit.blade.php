@@ -103,13 +103,13 @@
                                                     published
                                                 </div>
                                             @else
-                                                @if($PU->VotingResults)
+                                                @if($PU->VotingResults->count() > 0)
                                                     <div class="alert alert-success">
                                                         <table class="table">
-                                                            @foreach(PoliticalParty::all() as $Party)
+                                                            @foreach($PU->VotingResults as $Result)
                                                                 <tr>
-                                                                    <td>{{ $Party->name }}</td>
-                                                                    <td>{{ getVoteCount($PU, $Party) }}</td>
+                                                                    <td>({{ $Result->Party->slug }}) {{ $Result->Party->name }}</td>
+                                                                    <td>{{ $Result->count }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </table>
@@ -121,12 +121,13 @@
                                                         @csrf
                                                         <table class="text-black">
                                                             <tr>
-                                                                <th>Polling Unit</th>
-                                                                <td style="width:50px;"></td>
-                                                                <td><p class="h4">{{ $PU->name }}</p></td>
+                                                                <td class="text-center"><p class="h4">{{ $PU->name }}</p></td>
                                                             </tr>
                                                         </table>
-                                                        <table class="text-black">
+                                                        <table class="text-black table table-striped">
+                                                            <colgroup>
+                                                                <col width="50%" />
+                                                            </colgroup>
                                                             @foreach(PoliticalParty::all() as $Party)
                                                                 <tr>
                                                                     <th>{{ $Party->slug }}</th>

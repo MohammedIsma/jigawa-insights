@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\LGA;
 use App\Models\PoliticalParty;
 use App\Models\PollingUnit;
 use App\Models\VotingResult;
+use Illuminate\Support\Facades\Cache;
 
 function getAccClass($cl){
     if($cl<25){
@@ -40,4 +42,16 @@ function getVoteCount(PollingUnit $pu, PoliticalParty $p=null){
     }
 
     return $Result->sum("count");
+}
+
+function getPoliticalParty($pid){
+    return Cache::remember("get_pparty$pid", 3600, function() use($pid){
+        return PoliticalParty::find($pid);
+    });
+}
+
+function getLGA($lid){
+    return Cache::remember("get_lga_$lid", 3600, function() use($lid){
+        return LGA::find($lid);
+    });
 }

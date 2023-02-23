@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\LGA;
 use App\Models\PollingUnit;
 use App\Models\State;
+use App\Models\User;
 use App\Models\Ward;
 use Illuminate\Database\Seeder;
 
@@ -49,5 +50,11 @@ class LGASeeder extends Seeder
             $transRow = false;
         }
         fclose($csvData);
+
+        User::where("id", 1)->update([
+            "allowed_wards" => Ward::pluck("id")->toArray(),
+            "allowed_lgas" => LGA::pluck("id")->toArray(),
+        ]);
+
     }
 }

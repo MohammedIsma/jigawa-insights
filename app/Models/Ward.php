@@ -44,7 +44,7 @@ class Ward extends Model
 
     public function getAccreditedVotersAttribute($value){
         $ACC = AccreditationResult::where('ward_id', $this->id)->first();
-        return $ACC ? $ACC->sum('count') : 0;
+        return $ACC ? $ACC->sum('accredited_count') : 0;
     }
 
     public function getTurnoutAttribute($value){
@@ -55,7 +55,7 @@ class Ward extends Model
         }
 
         $vcount = $this->PollingUnits->sum('voter_count');
-        return round(($Res->sum('count')/$vcount) * 100, 2);
+        return round(($Res->sum('accredited_count')/$vcount) * 100, 2);
     }
 
 }

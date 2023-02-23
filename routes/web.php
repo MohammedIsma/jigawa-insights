@@ -37,6 +37,8 @@ Route::group(["middleware"=>"auth"], function() {
     Route::get('/all', [HomeController::class, 'show_all'])->name("show_all_summary");
 
     Route::get('/dash/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
+    Route::get('/dash/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
+    Route::get('/dash/spread', [DashboardController::class, 'spread_dash'])->name('spread_dash');
 //    Route::get('/exec_dash', [DashboardController::class, 'exec_dash'])->name('exec_dash');
 
     Route::resource('/states', StateController::class);

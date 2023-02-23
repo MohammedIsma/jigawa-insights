@@ -24,6 +24,20 @@ class LGA extends Model
             ->get();
     }
 
+    public function getLeadingPartyAttribute()
+    {
+        $R = VotingResult::selectRaw("political_party_id, SUM(count) as count")
+            ->where("lga_id", $this->id)
+            ->orderBy("count","desc")
+            ->groupBy("political_party_id")
+            ->first();
+        return $R;
+    }
+
+    public function VotingResults(){
+        return $this->hasMany(VotingResult::class, 'lga_id', 'id');
+    }
+
     public function PollingUnits(){
         return $this->hasMany(PollingUnit::class, 'lga_id', 'id');
     }
@@ -41,6 +55,6 @@ class LGA extends Model
 
     public function getAccreditedVotersAttribute($value){
         $ACC = AccreditationResult::where('lga_id', $this->id)->first();
-        return $ACC ? $ACC->sum('count') : 0;
+        return $ACC ? $ACC->sum('accredited_count') : 0;
     }
 }

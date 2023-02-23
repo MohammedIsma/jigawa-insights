@@ -22,7 +22,7 @@ class PollingUnit extends Model
     }
 
     public function VotingResults(){
-        return $this->hasMany(VotingResult::class, "polling_unit_id", "id");
+        return $this->hasMany(VotingResult::class, "polling_unit_id", "id")->orderBy("count", "desc");
     }
 
     public function getAccreditationPercentageAttribute($value){
@@ -36,17 +36,16 @@ class PollingUnit extends Model
 
     public function getAccreditedVotersAttribute($value){
         $ACC = AccreditationResult::where('polling_unit_id', $this->id)->first();
-        return $ACC ? $ACC->count : 0;
+        return $ACC ? $ACC->accredited_count : 0;
     }
 
     public function getTurnoutAttribute($value){
 
         $Res = AccreditationResult::where('polling_unit_id', $this->id)->first();
-
         if(!$Res){
             return 0;
         }
 
-        return round(($Res->count/$this->voter_count) * 100, 2);
+        return round(($Res->accredited_count/$this->voter_count) * 100, 2);
     }
 }
