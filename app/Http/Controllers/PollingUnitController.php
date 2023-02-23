@@ -124,7 +124,8 @@ class PollingUnitController extends Controller
             "ward_id" => $PU->ward_id,
             "polling_unit_id" => $PU->id
         ],[
-            "count" => $count,
+            "voter_count" => $PU->voter_count,
+            "accredited_count" => $count,
             "box_count" => $box_count,
             "user_id" => auth()->user()->id,
         ]);

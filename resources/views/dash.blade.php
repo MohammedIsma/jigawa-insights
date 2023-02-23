@@ -51,7 +51,7 @@
     <div class="col-12 col-md-8">
         <div class="card mb-5 rounded-3 shadow-sm border-primary text-left">
           <div class="card-body">
-
+              <a href="/states/1" class="btn btn-primary">Jigawa Dashboard</a>
           </div>
         </div>
       </div>

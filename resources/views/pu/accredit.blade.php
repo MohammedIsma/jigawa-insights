@@ -49,28 +49,34 @@
                                                         <td style="width:50px;"></td>
                                                         <td>
                                                             @if(!$PU->accredited_voters)
-                                                                @if(canUpdatePollingUnit($PU))
-                                                                    <div class="alert alert-info">
-                                                                        <p class="h6 text-primary">Confirm
-                                                                            accreditation</p>
-                                                                        <div>
-                                                                            <input type="number" class="form-control"
-                                                                                   name="box_count" min=1 max=""
-                                                                                   required
-                                                                                   placeholder="how many boxes in PU"/><br/>
-                                                                            <input type="number" class="form-control"
-                                                                                   name="acc_count"
-                                                                                   max="{{ $PU->voter_count }}" required
-                                                                                   placeholder="how many voters accredited total"/><br/>
-                                                                            <button class="btn btn-primary"
-                                                                                    type="submit">Submit
-                                                                            </button>
-                                                                        </div>
+                                                                @if(!config("insights.accreditation_entry_enabled"))
+                                                                    <div class="alert alert-warning">
+                                                                        Accreditation NOT ready. Please wait...
                                                                     </div>
                                                                 @else
-                                                                    <div class="alert alert-warning">
-                                                                        <p>You cannot update this PU</p>
-                                                                    </div>
+                                                                    @if(canUpdatePollingUnit($PU))
+                                                                        <div class="alert alert-info">
+                                                                            <p class="h6 text-primary">Confirm
+                                                                                accreditation</p>
+                                                                            <div>
+                                                                                <input type="number" class="form-control"
+                                                                                       name="box_count" min=1 max=""
+                                                                                       required
+                                                                                       placeholder="how many boxes in PU"/><br/>
+                                                                                <input type="number" class="form-control"
+                                                                                       name="acc_count"
+                                                                                       max="{{ $PU->voter_count }}" required
+                                                                                       placeholder="how many voters accredited total"/><br/>
+                                                                                <button class="btn btn-primary"
+                                                                                        type="submit">Submit
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="alert alert-warning">
+                                                                            <p>You cannot update this PU</p>
+                                                                        </div>
+                                                                    @endif
                                                                 @endif
                                                             @else
                                                                 <div>
@@ -103,14 +109,13 @@
                                                     published
                                                 </div>
                                             @else
-                                                @if($PU->VotingResults)
+                                                @if($PU->VotingResults->count() > 0)
                                                     <div class="alert alert-success">
                                                         <table class="table">
-                                                            @foreach(VoteResults($PU) as $Result)
+                                                            @foreach($PU->VotingResults as $Result)
                                                                 <tr>
-                                                                    <td>{{ $Result->Party->name }}</td>
+                                                                    <td>({{ $Result->Party->slug }}) {{ $Result->Party->name }}</td>
                                                                     <td>{{ $Result->count }}</td>
-
                                                                 </tr>
                                                             @endforeach
                                                         </table>
@@ -120,14 +125,11 @@
                                                     <form action="{{ route('submit_results', $PU->id) }}"
                                                           method="POST">
                                                         @csrf
-                                                        <table class="text-black">
-                                                            <tr>
-                                                                <th>Polling Unit</th>
-                                                                <td style="width:50px;"></td>
-                                                                <td><p class="h4">{{ $PU->name }}</p></td>
-                                                            </tr>
-                                                        </table>
-                                                        <table class="text-black">
+                                                        <p class="h4 text-center">{{ $PU->name }}</p>
+                                                        <table class="text-black table table-striped">
+                                                            <colgroup>
+                                                                <col width="50%" />
+                                                            </colgroup>
                                                             @foreach(PoliticalParty::all() as $Party)
                                                                 <tr>
                                                                     <th>{{ $Party->slug }}</th>

@@ -33,6 +33,12 @@ class DashboardController extends Controller
     }
 
     public function accreditation_dash_1(){
-        return view("exec_dashboard");
+        return view("dash.exec_dashboard");
+    }
+    public function tally_dash(){
+        return view("dash.tally_dashboard");
+    }
+    public function spread_dash(){
+        return view("dash.spread_dashboard");
     }
 }

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PoliticalPartiesSeeder::class,
             LGASeeder::class,
         ]);
+
         UpdateCounts::dispatch();
     }
 }

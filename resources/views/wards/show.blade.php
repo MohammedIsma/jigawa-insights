@@ -61,7 +61,7 @@
                             <div class="col-3">
                                 <p class="h5 text-warning">Key People</p>
                                 <div class="row justify-content-center">
-                                    @foreach($Ward->Officials() as $Official)
+                                @foreach($Ward->Officials() as $Official)
                                         <div class="col-lg-4 col-md-6 col-12">
                                             <div class="single-friend rank{{$Official->ranking}}">
                                                 <div class="friend-content p-2">

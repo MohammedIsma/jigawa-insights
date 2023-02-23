@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LGAController;
 use App\Http\Controllers\PollingUnitController;
+use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\WardController;
 use Illuminate\Http\Request;
@@ -35,4 +36,6 @@ Route::get('/ward', [WardController::class, 'index']);
 Route::get('/pu/{id}', [PollingUnitController::class, 'show']);
 Route::get('/pu', [PollingUnitController::class, 'index']);
 
+Route::get('/ajx_get_tally_results', [ResultsController::class, 'ajx_get_tally_results']);
 Route::get('/ajx_get_lgas', [LGAController::class, 'ajx_get_lgas']);
+Route::get('/ajx_get_lga_winners', [LGAController::class, 'ajx_get_lga_winners']);

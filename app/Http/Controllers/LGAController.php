@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LGAResource;
+use App\Models\AccreditationResult;
 use App\Models\LGA;
+use App\Models\PoliticalParty;
 use App\Models\State;
+use App\Models\VotingResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LGAController extends Controller
 {
@@ -35,6 +39,28 @@ class LGAController extends Controller
             "success" => true,
             "payload" => [
                 "LGAs" => LGAResource::collection($lgas),
+                "time" => date("H:i:s - dM")
+            ]
+        ];
+    }
+
+    public function ajx_get_lga_winners()
+    {
+        $LGA_Winners = [];
+        foreach(LGA::all() as $lga){
+            $lp = $lga->leading_party;
+            $p = $lp ? PoliticalParty::find($lp->political_party_id) : null;
+            $LGA_Winners[] = [
+                "name" => $lga->name,
+                "logo" => $lp ? $p->logo : null,
+                "leading_party" => $lp ? $p->name : null,
+                "leading_count" => $lp ? $lp->count : null,
+            ];
+        }
+        return [
+            "success" => true,
+            "payload" => [
+                "LGWinners" => $LGA_Winners,
                 "time" => date("H:i:s - dM")
             ]
         ];
