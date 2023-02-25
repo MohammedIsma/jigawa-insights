@@ -22,11 +22,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function(){
+    foreach(\App\Models\LGA::all() as $L){
+        $ids = $L->Wards->pluck('id')->toArray();
+
+        $U = \App\Models\User::updateOrCreate([
+            "name" => $L->name . " Coordinator",
+            "email" => strtolower( str_replace(" ", "", $L->name) ) . "@gmail.com",
+        ],[
+            "password" => bcrypt("password"),
+            "allowed_wards" => $ids
+        ]);
+        
+    }
+    UpdateCounts::dispatch();
+});
+
 Route::get('/', function () {
     return view('welcome');
-});
-Route::get('/test', function () {
-    UpdateCounts::dispatch();
 });
 
 Route::group(["middleware"=>"auth"], function() {
@@ -61,3 +74,5 @@ Route::group(["middleware"=>"auth"], function() {
 Auth::routes([
     "register"=>false
 ]);
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
