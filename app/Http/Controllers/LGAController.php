@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LGAResource;
 use App\Models\AccreditationResult;
 use App\Models\LGA;
 use App\Models\PoliticalParty;
 use App\Models\State;
 use App\Models\VotingResult;
+use App\Http\Resources\LGAResource;
+use App\Http\Resources\WardResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class LGAController extends Controller
         $lga = LGA::withCount(['PollingUnits', 'Wards'])->get();
         if($lga){
             $state = ''; //$lga->state()->state_name;
-        $lgas = array('lgas'=> $lga, 'state'=> $state);
+        $lgas = array('lgas'=> LGAResource::collection($lga), 'state'=> $state);
         //return response()->json(['data'=>$lga], 200);
         return view('lga', compact('lgas'));
         }else{
@@ -39,6 +40,20 @@ class LGAController extends Controller
             "success" => true,
             "payload" => [
                 "LGAs" => LGAResource::collection($lgas),
+                "time" => date("H:i:s - dM")
+            ]
+        ];
+    }
+
+    public function ajx_get_wards($lga_id)
+    {
+        $LGA = LGA::findOrFail($lga_id);
+        $wards = $LGA->Wards;
+        return [
+            "success" => true,
+            "payload" => [
+                "LGA" => new LGAResource ($LGA),
+                "Wards" => WardResource::collection($wards),
                 "time" => date("H:i:s - dM")
             ]
         ];
@@ -113,37 +128,40 @@ class LGAController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    public function ajx_get_ward_results_tally($lga_id){
+        $r = [];
+        $LGA = LGA::findOrFail($lga_id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $Parties = PoliticalParty::whereIn(
+            "id", VotingResult::where("lga_id", $lga_id)->where('count','>',0)->pluck("political_party_id")->toArray()
+        )->pluck("slug")->toArray();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        foreach($LGA->Wards as $Ward) {
+            $VR = VotingResult::selectRaw("political_party_id,SUM(count) as tally")
+                ->where("ward_id", $Ward->id)
+                ->having("tally",">",0)
+                ->groupBy("political_party_id")
+                ->get();
+
+            foreach ($VR as $vr) {
+                $party = getPoliticalParty($vr->political_party_id);
+                $r[$Ward->id]["reported"] = $Ward->reported_percentage;
+                $r[$Ward->id]["results"][$party->slug] =[
+                    "ward_name" => $Ward->name,
+                    "party_name" => getPoliticalParty($vr->political_party_id)->name,
+                    "party_slug" => getPoliticalParty($vr->political_party_id)->slug,
+                    "party_logo" => getPoliticalParty($vr->political_party_id)->logo,
+                    "tally" => $vr->tally
+                ];
+            }
+        }
+
+        return response()->json([
+            "success" => true,
+            "payload" => [
+                "parties" => array_unique($Parties),
+                "results" => $r
+            ]
+        ]);
     }
 }
