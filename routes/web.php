@@ -33,9 +33,9 @@ Route::get('test', function(){
             "password" => bcrypt("password"),
             "allowed_wards" => $ids
         ]);
-        
+
     }
-    UpdateCounts::dispatch();
+//    UpdateCounts::dispatch();
 });
 
 Route::get('/', function () {

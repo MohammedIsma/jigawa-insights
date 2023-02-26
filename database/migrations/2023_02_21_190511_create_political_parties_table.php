@@ -18,6 +18,7 @@ class CreatePoliticalPartiesTable extends Migration
             $table->string("logo")->nullable();
             $table->string("slug");
             $table->string("name");
+            $table->integer("weight")->default(50);
             $table->timestamps();
         });
     }
