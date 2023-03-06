@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LGAResource;
+use App\Http\Resources\PollingUnitResource;
 use App\Models\AccreditationResult;
 use App\Models\LGA;
 use App\Models\PoliticalParty;
+use App\Models\PollingUnit;
 use App\Models\State;
 use App\Models\VotingResult;
+use App\Http\Resources\LGAResource;
+use App\Http\Resources\WardResource;
+use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +27,7 @@ class LGAController extends Controller
         $lga = LGA::withCount(['PollingUnits', 'Wards'])->get();
         if($lga){
             $state = ''; //$lga->state()->state_name;
-        $lgas = array('lgas'=> $lga, 'state'=> $state);
+        $lgas = array('lgas'=> LGAResource::collection($lga), 'state'=> $state);
         //return response()->json(['data'=>$lga], 200);
         return view('lga', compact('lgas'));
         }else{
@@ -44,6 +48,20 @@ class LGAController extends Controller
         ];
     }
 
+    public function ajx_get_wards($lga_id)
+    {
+        $LGA = LGA::findOrFail($lga_id);
+        $wards = $LGA->Wards;
+        return [
+            "success" => true,
+            "payload" => [
+                "LGA" => new LGAResource ($LGA),
+                "Wards" => WardResource::collection($wards),
+                "time" => date("H:i:s - dM")
+            ]
+        ];
+    }
+
     public function ajx_get_lga_winners()
     {
         $LGA_Winners = [];
@@ -51,6 +69,7 @@ class LGAController extends Controller
             $lp = $lga->leading_party;
             $p = $lp ? PoliticalParty::find($lp->political_party_id) : null;
             $LGA_Winners[] = [
+                "id" => $lga->id,
                 "name" => $lga->name,
                 "logo" => $lp ? $p->logo : null,
                 "leading_party" => $lp ? $p->name : null,
@@ -113,37 +132,108 @@ class LGAController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function ajx_get_ward_results_tally($lga_id){
+        $r = [];
+        $LGA = LGA::findOrFail($lga_id);
+
+        $Parties = PoliticalParty::whereIn(
+            "id", VotingResult::where("lga_id", $lga_id)->where('count','>',0)->pluck("political_party_id")->toArray()
+        )->pluck("slug")->toArray();
+
+
+        $party_votes = [];
+        foreach($LGA->Wards as $Ward) {
+            $VR = VotingResult::selectRaw("political_party_id,SUM(count) as tally")
+                ->where("ward_id", $Ward->id)
+                ->having("tally",">",0)
+                ->groupBy("political_party_id")
+                ->get();
+
+            $all_votes = 0;
+
+            if($VR->count() > 0){
+                foreach ($VR as $vr) {
+                    $party = getPoliticalParty($vr->political_party_id);
+                    if(!isset($party_votes[$party->slug])){
+                        $party_votes[$party->slug] = 0;
+                    }
+
+
+                    $r[$Ward->id]["reported"] = $Ward->reported_percentage;
+                    $r[$Ward->id]["results"][$party->slug] =[
+                        "ward_name" => $Ward->name,
+                        "party_name" => getPoliticalParty($vr->political_party_id)->name,
+                        "party_slug" => getPoliticalParty($vr->political_party_id)->slug,
+                        "party_logo" => getPoliticalParty($vr->political_party_id)->logo,
+                        "tally" => $vr->tally
+                    ];
+                    $all_votes += $vr->tally;
+                    $party_votes[$party->slug] += $vr->tally;
+                }
+                $r[$Ward->id]['total_votes'] = $all_votes;
+
+            }
+
+        }
+
+        return response()->json([
+            "success" => true,
+            "payload" => [
+                "parties" => array_unique($Parties),
+                "results" => $r,
+                "party_votes" => $party_votes
+            ]
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function ajx_get_lga_pu_results_tally($ward_id){
+        $r = [];
+        $Ward = Ward::findOrFail($ward_id);
+
+        $Parties = PoliticalParty::whereIn(
+            "id", VotingResult::where("ward_id", $ward_id)->where('count','>',0)->pluck("political_party_id")->toArray()
+        )->pluck("slug")->toArray();
+
+        $party_votes = [];
+
+        foreach($Ward->PollingUnits as $PU) {
+            $VR = VotingResult::selectRaw("political_party_id,SUM(count) as tally")
+                ->where("polling_unit_id", $PU->id)
+                ->having("tally",">",0)
+                ->groupBy("political_party_id")
+                ->get();
+
+            $all_votes = 0;
+
+            if($VR->count() > 0){
+                foreach ($VR as $vr) {
+                    $party = getPoliticalParty($vr->political_party_id);
+
+                    $r[$PU->id]["reported"] = $PU->reported_percentage;
+                    $r[$PU->id]["results"][$party->slug] =[
+                        "pu_name" => $PU->name,
+                        "party_name" => getPoliticalParty($vr->political_party_id)->name,
+                        "party_slug" => getPoliticalParty($vr->political_party_id)->slug,
+                        "party_logo" => getPoliticalParty($vr->political_party_id)->logo,
+                        "tally" => $vr->tally
+                    ];
+                    $all_votes += $vr->tally;
+                }
+                $r[$PU->id]['total_votes'] = $all_votes;
+
+            }
+
+        }
+
+        return response()->json([
+            "success" => true,
+            "payload" => [
+                "ward" => new WardResource( $Ward ),
+                "pu_results" => $r,
+                "pu_list" => PollingUnitResource::collection($Ward->PollingUnits),
+                "party_votes" => $party_votes
+            ]
+        ]);
     }
 }

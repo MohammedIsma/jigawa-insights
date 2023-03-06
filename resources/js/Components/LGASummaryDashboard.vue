@@ -14,7 +14,7 @@
         <tr class="text-white text-uppercase" style="border-bottom: none;">
             <th class="text-black text-center">{{  time }}</th>
             <th class="bg-primary text-center" colspan="2"></th>
-            <th class="bg-success text-center" colspan="3">ACCREDITATION</th>
+            <th class="bg-success text-center" colspan="3">RESULTS</th>
             <th class="bg-warning text-center" colspan="2"></th>
         </tr>
         <tr class="text-white text-uppercase" style="border-bottom: 5px solid #000;">
@@ -22,7 +22,7 @@
             <th class="bg-primary text-center">Polling Units</th>
             <th class="bg-primary text-center">Registered Voters</th>
             <th class="bg-success text-center">Reported</th>
-            <th class="bg-success text-center">Turnout</th>
+            <th class="bg-success text-center">Completion</th>
             <th class="bg-success text-center">Voters</th>
             <th class="bg-warning text-center" colspan="2"></th>
         </tr>
@@ -31,7 +31,8 @@
             <td class="text-center rank_cell">{{ LGA.polling_unit_count }}</td>
             <td class="text-center rank_cell">{{ LGA.voter_count }}</td>
             <td class="text-center rank_cell">{{ LGA.reported_pu_count }}</td>
-            <td class="text-center rank_cell" :class="{'text-danger':LGA.turnout<76}">{{ LGA.turnout }}%</td>
+            <td class="text-center rank_cell" :class="{'bg-success':LGA.reported_percentage>90,'text-danger':LGA.reported_percentage<50, 'text-warning' : LGA.reported_percentage<70}">{{ LGA.reported_percentage }}%</td>
+
             <td class="text-center rank_cell">{{ LGA.accredited_count }}</td>
             <td class="text-center rank_cell"></td>
             <td class="text-center rank_cell"></td>

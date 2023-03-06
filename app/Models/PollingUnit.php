@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class PollingUnit extends Model
 {
     protected $guarded = [];
-
+    protected $casts = [
+        "has_issue" => "boolean"
+    ];
+    
     public function LGA(){
         return $this->belongsTo(LGA::class, 'lga_id', 'id');
     }

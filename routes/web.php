@@ -10,6 +10,7 @@ use App\Http\Controllers\WardController;
 use App\Jobs\UpdateCounts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\Ward;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +23,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function(){
+    // foreach(\App\Models\LGA::all() as $L){
+    //     $ids = $L->Wards->pluck('id')->toArray();
+
+    //     $U = \App\Models\User::updateOrCreate([
+    //         "name" => $L->name . " Coordinator",
+    //         "email" => strtolower( str_replace(" ", "", $L->name) ) . "@gmail.com",
+    //     ],[
+    //         "password" => bcrypt("password"),
+    //         "allowed_wards" => $ids
+    //     ]);
+
+    // }
+//    $wids = Ward::whereIn("lga_id", [1])->pluck("id")->toArray();
+//    UpdateCounts::dispatch($wids);
+
+    $with_results = \App\Models\VotingResult::pluck("polling_unit_id")->toArray();
+    foreach(\App\Models\PollingUnit::orderBy("lga_id")->orderBy("ward_id")->get() as $pu){
+        if(!in_array($pu->id, $with_results)) {
+            echo sprintf("%s|%s|%s<br />",
+                $pu->LGA->name,
+                $pu->Ward->name,
+                $pu->name,
+            );
+        }
+    }
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test', function () {
-    UpdateCounts::dispatch();
-});
+
+Route::get('/dash/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
+Route::get('/dash/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
+Route::get('/dash/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
+
 
 Route::group(["middleware"=>"auth"], function() {
 
@@ -36,9 +67,7 @@ Route::group(["middleware"=>"auth"], function() {
 
     Route::get('/all', [HomeController::class, 'show_all'])->name("show_all_summary");
 
-    Route::get('/dash/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
-    Route::get('/dash/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
-    Route::get('/dash/spread', [DashboardController::class, 'spread_dash'])->name('spread_dash');
+
 //    Route::get('/exec_dash', [DashboardController::class, 'exec_dash'])->name('exec_dash');
 
     Route::resource('/states', StateController::class);
@@ -48,6 +77,8 @@ Route::group(["middleware"=>"auth"], function() {
 
     Route::get('/submit/accreditation/{pu_id}', [PollingUnitController::class, 'submit_accreditation'])->name("submit_accreditation");
     Route::post('/submit/accreditation/{pu_id}', [PollingUnitController::class, 'fn_submit_accreditation'])->name("submit_accreditation");
+    Route::get('/submit/agent/{pu_id}', [PollingUnitController::class, 'submit_agent'])->name("submit_agent");
+    Route::post('/submit/agent/{pu_id}', [PollingUnitController::class, 'fn_submit_agent'])->name("submit_agent");
     Route::post('/submit/results/{pu_id}', [PollingUnitController::class, 'fn_submit_results'])->name("submit_results");
 
     Route::resource('/officials', OfficialController::class);
@@ -56,8 +87,13 @@ Route::group(["middleware"=>"auth"], function() {
     Route::get('/ward/officials/{ward}', [OfficialController::class, 'officialsByWard']);
     Route::get('/unit/officials/{unit}', [OfficialController::class, 'officialsByUnit']);
 
+    Route::get('/clear_results/{pu}', [PollingUnitController::class, 'delete_results'])->name("delete_results");
+    Route::post('/find_pu', [PollingUnitController::class, 'search'])->name("find_pu");
+
 });
 
 Auth::routes([
     "register"=>false
 ]);
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

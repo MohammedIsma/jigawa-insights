@@ -23,6 +23,7 @@ class DashboardController extends Controller
             'ward'=> $ward,
             'unit'=> $unit
         );
+
         if($totals){
         //return response()->json($totals);
         return view('dash', compact('totals'));
@@ -38,7 +39,7 @@ class DashboardController extends Controller
     public function tally_dash(){
         return view("dash.tally_dashboard");
     }
-    public function spread_dash(){
-        return view("dash.spread_dashboard");
+    public function spread_dash($lgaid=null, $wardid=null, $puid=null){
+        return view("dash.spread_dashboard", compact('lgaid','wardid','puid'));
     }
 }

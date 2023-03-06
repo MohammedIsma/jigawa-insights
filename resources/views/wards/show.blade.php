@@ -93,19 +93,24 @@
                                                     <th>Reg. Voters</th>
                                                     <th class="text-center">Accreditation</th>
                                                     <th class="text-center">Turnout</th>
+                                                    <th class="text-center"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($Ward->PollingUnits as $PU)
                                                     <tr>
                                                         <td>
-                                                            @if($PU->accredited_count_1)
-                                                                <span class="text-success">
-                                                                    <i class="fa fa-check"></i> Accredited
-                                                                </span>
+                                                            @if($PU->has_issue)
+                                                                <div class="bg-warning pl-1"><i class="fa fa-exclamation-triangle"></i> Has Issue!</div>
                                                             @else
-                                                                @if(canUpdatePollingUnit($PU))
-                                                                <a target="_blank" href="{{ route('submit_accreditation', $PU->id) }}" class="btn btn-sm btn-success px-4 py-1">Submit Accreditation</a>
+                                                                @if($PU->accredited_count_1)
+                                                                    <span class="text-success">
+                                                                        <i class="fa fa-check"></i> Accredited
+                                                                    </span>
+                                                                @else
+                                                                    @if(canUpdatePollingUnit($PU))
+                                                                       <a href="{{ route('submit_accreditation', $PU->id) }}" class="btn btn-sm btn-success px-4 py-1">Submit Accreditation</a>
+                                                                    @endif
                                                                 @endif
                                                             @endif
                                                         </td>
@@ -117,6 +122,11 @@
                                                             <span class="text-{{getAccClass($PU->accreditation_percentage)}}"><small>({{ $PU->accreditation_percentage }})%</small></span>
                                                         </td>
                                                         <td class="text-center bg-{{ getTurnClass($PU->turnout) }}">{{ $PU->turnout }}%</td>
+                                                        <td>
+                                                            @if(auth()->user()->id==1)
+                                                            <a href="{{ route('delete_results', $PU->id)}}" class="text-danger">Del</a>
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>

@@ -81,7 +81,8 @@
                                                 <div>
                                                     {{ round($Ward->accreditation_percentage,1) }}%
                                                     <span style="font-size:.7em;">reported</span>
-                                                    <span class="mx-2 text-success"><i class="fa fa-user"></i> {{ number_format($Ward->accredited_voters) }}</span>
+                                                    <span class="mx-2 text-success"><i class="fa fa-user"></i>
+                                                    {{ number_format($Ward->accredited_voters) }}</span>
                                                 </div>
                                             </div>
                                         </div>

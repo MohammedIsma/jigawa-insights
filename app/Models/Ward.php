@@ -14,7 +14,6 @@ class Ward extends Model
     ];
 
 
-
     public function State(){
         return $this->belongsTo(State::class);
     }
@@ -23,6 +22,20 @@ class Ward extends Model
     }
     public function PollingUnits(){
         return $this->hasMany(PollingUnit::class);
+    }
+
+    public function VotingResults(){
+        return $this->hasMany(VotingResult::class);
+    }
+
+    public function getLeadingPartyAttribute()
+    {
+        $R = VotingResult::selectRaw("political_party_id, SUM(count) as count")
+            ->where("ward_id", $this->id)
+            ->orderBy("count","desc")
+            ->groupBy("political_party_id")
+            ->first();
+        return $R;
     }
 
     public function Officials(){
@@ -38,13 +51,19 @@ class Ward extends Model
     public function getAccreditationPercentageAttribute($value){
         $pu_count = $this->PollingUnits->count();
         $acc_count = AccreditationResult::where('ward_id', $this->id)->count();
-
+        
         return round(($acc_count/$pu_count) * 100, 1);
     }
 
     public function getAccreditedVotersAttribute($value){
-        $ACC = AccreditationResult::where('ward_id', $this->id)->first();
+        $ACC = AccreditationResult::where('ward_id', $this->id)->get();
         return $ACC ? $ACC->sum('accredited_count') : 0;
+    }
+
+
+    public function getReportedPercentageAttribute($value){
+        $reported_pus = AccreditationResult::where("ward_id", $this->id)->count();
+        return round(($reported_pus/$this->PollingUnits->count()) * 100, 1);
     }
 
     public function getTurnoutAttribute($value){
