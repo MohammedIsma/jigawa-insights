@@ -42,7 +42,7 @@ class PollingUnitController extends Controller
         }
 
         return redirect()->back();
-        
+
     }
 
     /**
@@ -131,6 +131,36 @@ class PollingUnitController extends Controller
         $r = route("ward.show", $PU->ward_id);
         echo '<a href="'.$r.'">Click to go back</a>';
         // return redirect()->route("ward.show", $PU->ward_id);
+    }
+
+    public function fn_submit_ward_results(Request $request, $ward_id)
+    {
+
+        $post = $request->all();
+
+        $votes = $post['pvote'];
+        foreach($votes as $puid=>$v){
+            foreach ($v as $ppid=>$v){
+                if($v!==null){
+                    $pu = PollingUnit::find($puid);
+                    VotingResult::updateOrCreate([
+                        "state_id" => 1,
+                        "lga_id" => $pu->lga_id,
+                        "ward_id" => $pu->ward_id,
+                        "political_party_id" => $ppid,
+                        "polling_unit_id" => $puid,
+                    ],[
+                        "user_id" => auth()->user()->id,
+                        "count" => $v
+                    ]);
+                }
+            }
+        }
+
+        UpdateCounts::dispatchSync([$ward_id]);
+
+        return redirect()->back();
+
     }
 
     public function fn_submit_results(Request $request, $pu_id)

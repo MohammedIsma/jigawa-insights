@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LGA;
+use App\Models\VotingResult;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,16 @@ class WardController extends Controller
     {
         $Ward = Ward::findOrFail($id);
         $params['Ward'] = $Ward;
+        $params['Parties'] = getPopularParties();
+
+        $VR = VotingResult::where('ward_id', $id)->get();
+        $Results = [];
+
+        foreach($VR as $vr){
+            $Results[$vr->polling_unit_id][$vr->political_party_id] = $vr->count;
+        }
+
+        $params['Results'] = $Results;
         return view('wards.show', $params);
     }
 

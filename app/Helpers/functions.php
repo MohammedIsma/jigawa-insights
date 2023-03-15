@@ -5,6 +5,7 @@ use App\Models\PoliticalParty;
 use App\Models\PollingUnit;
 use App\Models\State;
 use App\Models\VotingResult;
+use App\Models\Ward;
 use Illuminate\Support\Facades\Cache;
 
 function getAccClass($cl){
@@ -63,6 +64,12 @@ function getLGA($sid){
     });
 }
 
+function getWard($wid){
+    return Cache::remember("get_wward$wid", 3600, function() use($wid){
+        return Ward::find($wid);
+    });
+}
+
 function VoteResults(PollingUnit $pu, PoliticalParty $p=null){
     $Result = VotingResult::where("polling_unit_id", $pu->id);
     if($p){
@@ -70,4 +77,8 @@ function VoteResults(PollingUnit $pu, PoliticalParty $p=null){
     }
 
     return $Result->orderBy("count", "desc")->get();
+}
+
+function getPopularParties(){
+    return PoliticalParty::whereIn('id', [7,14,13,17])->get();
 }

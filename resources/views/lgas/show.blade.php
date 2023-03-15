@@ -13,8 +13,8 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="device-content card-box-style pt-3 pb-0 px-3">
+                            <div class="col-12 col-md-6 card">
+                                <div class="card-body text-black pt-3 pb-0 px-3">
                                     <p class="h5 text-center">&gt;&gt; {{ $LGA->name }} L.G &lt;&lt;</p>
                                     <div class="row justify-content-center">
                                         <div class="col-lg-4 col-md-4 col-sm-4">
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="m-0"     />
+                        <hr />
                         <div class="row">
                             <div class="col-12">
                                 <p class="h5 text-warning">Wards in {{$LGA->name}}</p>
