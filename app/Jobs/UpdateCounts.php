@@ -60,7 +60,7 @@ class UpdateCounts implements ShouldQueue
                     "user_id" => auth()->user()->id,
                     "box_count" => 1,
                     "voter_count" => $P->voter_count,
-                    "accredited_count" => 0 
+                    "accredited_count" => 0
                 ]);
             }else{
                 $Ar = AccreditationResult::firstOrCreate([

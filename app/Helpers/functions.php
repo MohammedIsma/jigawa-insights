@@ -3,6 +3,7 @@
 use App\Models\LGA;
 use App\Models\PoliticalParty;
 use App\Models\PollingUnit;
+use App\Models\State;
 use App\Models\VotingResult;
 use Illuminate\Support\Facades\Cache;
 
@@ -50,9 +51,15 @@ function getPoliticalParty($pid){
     });
 }
 
-function getLGA($lid){
-    return Cache::remember("get_lga_$lid", 3600, function() use($lid){
-        return LGA::find($lid);
+function getState($sid){
+    return Cache::remember("get_sstate$sid", 3600, function() use($sid){
+        return State::find($sid);
+    });
+}
+
+function getLGA($sid){
+    return Cache::remember("get_slga$sid", 3600, function() use($sid){
+        return LGA::find($sid);
     });
 }
 

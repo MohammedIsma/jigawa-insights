@@ -7,7 +7,9 @@ use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\PollingUnitController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\WardController;
+use App\Jobs\FetchPUSlips;
 use App\Jobs\UpdateCounts;
+use App\Models\VotingResult;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Ward;
@@ -23,7 +25,37 @@ use App\Models\Ward;
 |
 */
 
+Route::get('pull-slips', function() {
+    set_time_limit(0);
+    $PUs = \App\Models\PollingUnit::whereNull('has_image')->take(100)->get();
+    $PS = FetchPUSlips::dispatchSync($PUs);
+});
 Route::get('test', function(){
+    $iids = [12,23];
+    $PUs = \App\Models\PollingUnit::whereIn('lga_id', $iids)->get();
+
+    foreach($PUs as $pu){
+
+        $VR = VotingResult::selectRaw("political_party_id,SUM(count) as tally")
+            ->where("polling_unit_id", $pu->id)
+            ->having("tally",">",0)
+            ->groupBy("political_party_id")
+            ->get();
+
+        $voted = $VR->sum('tally');
+
+        echo sprintf("%s!%s!%s!%s!%s!%s",
+            $pu->LGA->name,
+            $pu->Ward->name,
+            $pu->name,
+            $pu->voter_count,
+            $voted,
+            round($voted/$pu->voter_count,2)
+                );
+        echo "<br />";
+    }
+
+    exit;
     // foreach(\App\Models\LGA::all() as $L){
     //     $ids = $L->Wards->pluck('id')->toArray();
 
