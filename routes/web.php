@@ -33,7 +33,7 @@ Route::get('pull-slips', function() {
 Route::get('test', [TestController::class, 'test2']);
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 Route::group(["prefix" => "dash-"], function() {
