@@ -44,7 +44,6 @@ Route::group(["prefix" => "dash-"], function() {
     Route::get('/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
 });
 
-
 Route::group(["middleware"=>"auth"], function() {
 
     Route::get('/home', [DashboardController::class, 'dash']); //[App\Http\Controllers\HomeController::class, 'index'])->name('home');
