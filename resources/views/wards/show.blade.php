@@ -65,53 +65,8 @@
                                     @csrf
                                     <div class="row">
                                     <div class="col-md-12">
-                                        <div class="bg-white">
-                                            <table class="table table-striped table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>DELIM.</th>
-                                                    <th>PU</th>
-                                                    <th style="white-space: nowrap;">Reg. Voters</th>
-                                                    @foreach($Parties as $Party)
-                                                    <th class="text-center">{{ $Party->slug }}</th>
-                                                    @endforeach
-                                                    <th><button type="submit" class="btn btn-sm btn-success">save</button></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($Ward->PollingUnits as $PU)
-                                                    @if( ($loop->iteration % 15) == 0)
-                                                        <tr>
-                                                            <th>DELIM.</th>
-                                                            <th>PU</th>
-                                                            <th style="white-space: nowrap;">Reg. Voters</th>
-                                                            @foreach($Parties as $Party)
-                                                                <th class="text-center">{{ $Party->slug }}</th>
-                                                            @endforeach
-                                                            <th><button type="submit" class="btn btn-sm btn-success">save</button></th>
-                                                        </tr>
-                                                    @endif
-                                                    <tr>
-                                                        <td style="white-space: nowrap;">{{ $PU->number }}</td>
-                                                        <td style="white-space: nowrap;">
-                                                            {{ $PU->name }}
-                                                            @if($PU->has_issue)
-                                                                <div class="bg-warning pl-1"><i class="fa fa-exclamation-triangle"></i> Has Issue!</div>
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $PU->voter_count }}</td>
-                                                        @foreach($Parties as $Party)
-                                                        <td class="text-center">
-                                                            <input type="number" class="vote_input" name="pvote[{{$PU->id}}][{{$Party->id}}]" value="{{ $Results[$PU->id][$Party->id] ?? '' }}" />
-                                                        </td>
-                                                        @endforeach
-                                                        <td>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="bg-white p-3">
+                                            <polling-unit-result-entry :ward_id="{{$Ward->id}}"></polling-unit-result-entry>
                                         </div>
                                     </div>
                                 </div>

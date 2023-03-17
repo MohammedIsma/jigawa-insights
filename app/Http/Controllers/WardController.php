@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PollingUnitResource;
 use App\Models\LGA;
+use App\Models\PoliticalParty;
 use App\Models\VotingResult;
 use App\Models\Ward;
 use Illuminate\Http\Request;
@@ -119,5 +121,23 @@ class WardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ajx_get_ward_sheet($wid){
+        $Ward = Ward::findOrFail($wid);
+        $VR = VotingResult::where('ward_id', $wid)->get();
+        $Results = [];
+
+        foreach($VR as $vr){
+            $Results[$vr->polling_unit_id][$vr->political_party_id] = $vr->count;
+        }
+
+        return [
+            "success" => true,
+            "polling_units" => PollingUnitResource::collection($Ward->PollingUnits),
+            "political_parties" => getPopularParties(),
+            "results" => $Results,
+        ];
+
     }
 }

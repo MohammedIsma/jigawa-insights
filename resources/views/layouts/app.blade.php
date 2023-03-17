@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 {{--    <link rel="stylesheet" href="/assets/css/responsive.css">--}}
     <link rel="stylesheet" href="/assets/css/ataru.css">
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">--}}
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
     <link rel="icon" type="image/png" href="/assets/images/favicon.svg">
     <title>Jigawa Insights</title>
 </head>
@@ -31,7 +31,7 @@
     <div class="preloader preloader-deactivate">
         <img src="/image/Ataru.jpg" alt="main-logo">
     </div>
-    <div class="all-section-area">
+    <div class="all-section-area" id="vBody">
         <main class="main-content-wrap" style="background-color:#2C3E50;color:#fff;padding:0;">
             @yield("content")
         </main>
@@ -49,5 +49,6 @@
 {{--    <script src="/assets/js/contact-form-script.js"></script>--}}
 {{--    <script src="/assets/js/ajaxchimp.min.js"></script>--}}
 {{--    <script src="/assets/js/custom.js"></script>--}}
+    <script src="/js/app.js"></script>
 </body>
 </html>

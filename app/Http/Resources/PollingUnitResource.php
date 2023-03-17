@@ -25,6 +25,7 @@ class PollingUnitResource extends JsonResource
         $lp = [
             "id" => $this->id,
             "name" => $this->name,
+            "number" => $this->number,
             "voter_count" => $this->voter_count,
             "accredited_count" => number_format($this->accredited_count_1),
             "is_reported" => $reported,
