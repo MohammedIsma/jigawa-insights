@@ -133,6 +133,17 @@
                                                             <colgroup>
                                                                 <col width="50%" />
                                                             </colgroup>
+                                                            @if(auth()->user()->id==1)
+                                                            <tr class="bg-info">
+                                                                <th class="">CANCELLED UNIT?</th>
+                                                                <td>
+                                                                    <select name="has_issue" class="form-control">
+                                                                        <option value="0">This Unit is OK</option>
+                                                                        <option value="1" select>Unit is Cancelled</option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            @endif
                                                             @foreach(PoliticalParty::orderBy('weight', 'desc')->orderBy('name')->get() as $Party)
                                                                 <tr>
                                                                     <th>{{ $Party->slug }}</th>

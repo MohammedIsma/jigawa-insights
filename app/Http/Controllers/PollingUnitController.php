@@ -32,25 +32,17 @@ class PollingUnitController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function delete_results($puid){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        if(auth()->user()->id == 1){
+            $PU = PollingUnit::findOrFail($puid);
+            VotingResult::where('polling_unit_id', $puid)->delete();
+            AccreditationResult::where('polling_unit_id', $puid)->delete();
+            UpdateCounts::dispatch([$PU->ward_id]);
+        }
+
+        return redirect()->back();
+
     }
 
     /**
@@ -73,16 +65,16 @@ class PollingUnitController extends Controller
         }
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function search(Request $request)
     {
-        //
+        $id = $request->pu_code ?? "x";
+        $PU = PollingUnit::find($id);
+
+        if($PU){
+            return redirect()->route("ward.show", $PU->ward_id);
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -141,12 +133,46 @@ class PollingUnitController extends Controller
         // return redirect()->route("ward.show", $PU->ward_id);
     }
 
+    public function fn_submit_ward_results(Request $request, $ward_id)
+    {
+
+        $post = $request->all();
+
+        $votes = $post['pvote'];
+        foreach($votes as $puid=>$v){
+            foreach ($v as $ppid=>$v){
+                if($v!==null){
+                    $pu = PollingUnit::find($puid);
+                    VotingResult::updateOrCreate([
+                        "state_id" => 1,
+                        "lga_id" => $pu->lga_id,
+                        "ward_id" => $pu->ward_id,
+                        "political_party_id" => $ppid,
+                        "polling_unit_id" => $puid,
+                    ],[
+                        "user_id" => auth()->user()->id,
+                        "count" => $v
+                    ]);
+                }
+            }
+        }
+
+        UpdateCounts::dispatchSync([$ward_id]);
+
+        return redirect()->back();
+
+    }
+
     public function fn_submit_results(Request $request, $pu_id)
     {
         $PU = PollingUnit::findOrFail($pu_id);
         $post = $request->all();
 
+        $has_issue = isset($post['has_issue']) && $post['has_issue'];
+        $ttl_votes = 0;
+
         foreach($post['vote_tally'] as $pid=>$tally) {
+            $ttl_votes += $tally;
             $Result = VotingResult::updateOrCreate([
                 "state_id" => 1,
                 "lga_id" => $PU->lga_id,
@@ -154,15 +180,21 @@ class PollingUnitController extends Controller
                 "polling_unit_id" => $PU->id,
                 "political_party_id" => $pid
             ], [
-                "count" => $tally,
+                "count" => $has_issue ? 0 : $tally,
                 "user_id" => auth()->user()->id,
             ]);
         }
+        $pu_upd = [
+            "accredited_count_1" => $ttl_votes,
+        ];
+
+        if($has_issue){
+            $pu_upd["has_issue"] = true;
+        }
+        $PU->update($pu_upd);
 
         UpdateCounts::dispatchSync([$PU->ward_id]);
         $r = route("ward.show", $PU->ward_id);
         echo '<a href="'.$r.'">Successful. Click to go back</a>';
-
-        // return redirect()->back();
     }
 }

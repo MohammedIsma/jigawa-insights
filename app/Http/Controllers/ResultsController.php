@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\VotingResult;
+use App\Models\PollingUnit;
+use App\Models\AccreditationResult;
 use Illuminate\Http\Request;
 
 class ResultsController extends Controller
@@ -21,8 +23,13 @@ class ResultsController extends Controller
                 "count" => number_format($r->count)
             ];
         });
+
+
+        $global_report_perc = number_format((AccreditationResult::count()/PollingUnit::count()) * 100,1);
         return response()->json([
             "time" => date("dM H:i:s"),
+            "total_votes" => number_format(VotingResult::sum('count')),
+            "vote_global_reporting" => $global_report_perc,
             "results" => $VRes
         ]);
     }

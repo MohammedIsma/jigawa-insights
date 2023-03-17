@@ -50,13 +50,18 @@ class UpdateCounts implements ShouldQueue
         foreach($this->PUs as $P){
             $Vr = VotingResult::where('polling_unit_id', $P->id)->sum('count');
             if($Vr < 1){
-                $P->update(["accredited_count_1"=>null]);
-                AccreditationResult::where([
+                $P->update(["accredited_count_1"=>0]);
+                AccreditationResult::updateOrCreate([
                     "state_id" => 1,
                     "lga_id" => $P->lga_id,
                     "ward_id" => $P->ward_id,
                     "polling_unit_id" => $P->id,
-                ])->delete();
+                ],[
+                    "user_id" => auth()->user()->id,
+                    "box_count" => 1,
+                    "voter_count" => $P->voter_count,
+                    "accredited_count" => 0
+                ]);
             }else{
                 $Ar = AccreditationResult::firstOrCreate([
                     "state_id" => 1,
@@ -69,7 +74,7 @@ class UpdateCounts implements ShouldQueue
                     "voter_count" => $P->voter_count,
                     "accredited_count" => $Vr
                 ]);
-                $P->update(["accredited_count_1"=>$Vr]);
+                $P->update(["accredited_count_1"=>(int)$Vr]);
             }
 
         }

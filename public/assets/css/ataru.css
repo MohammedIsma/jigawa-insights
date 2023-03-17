@@ -35,3 +35,8 @@
 .single-friend.rank3{ border-bottom: 2px solid #ccc; }
 .single-friend.rank4{ border-bottom: 2px solid #4987c5; }
 .single-friend.rank5{ border-bottom: 2px solid #0a0; }
+
+input.vote_input{
+    text-align:center;
+    width:75px;
+}

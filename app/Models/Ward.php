@@ -14,7 +14,6 @@ class Ward extends Model
     ];
 
 
-
     public function State(){
         return $this->belongsTo(State::class);
     }
@@ -52,7 +51,7 @@ class Ward extends Model
     public function getAccreditationPercentageAttribute($value){
         $pu_count = $this->PollingUnits->count();
         $acc_count = AccreditationResult::where('ward_id', $this->id)->count();
-
+        
         return round(($acc_count/$pu_count) * 100, 1);
     }
 

@@ -31,7 +31,7 @@
             <td class="text-center rank_cell">{{ LGA.polling_unit_count }}</td>
             <td class="text-center rank_cell">{{ LGA.voter_count }}</td>
             <td class="text-center rank_cell">{{ LGA.reported_pu_count }}</td>
-            <td class="text-center rank_cell" :class="{'text-danger':LGA.turnout<76}">{{ LGA.reported_percentage }}%</td>
+            <td class="text-center rank_cell" :class="{'bg-success':LGA.reported_percentage>90,'text-danger':LGA.reported_percentage<50, 'text-warning' : LGA.reported_percentage<70}">{{ LGA.reported_percentage }}%</td>
 
             <td class="text-center rank_cell">{{ LGA.accredited_count }}</td>
             <td class="text-center rank_cell"></td>

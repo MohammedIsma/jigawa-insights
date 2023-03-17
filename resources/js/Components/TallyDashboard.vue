@@ -1,10 +1,11 @@
 <template>
     <div class="row m-2">
-        <div class="col-5">
+        <div class="col-12 col-md-5">
             <div class="card">
                 <div class="card-body">
                     <p class="h6">Tally Count - {{ time }}</p>
                     <hr />
+                    <p class="h4 text-center text-primary"><strong>TOTAL Votes Cast: {{ vote_total }}</strong></p>
                     <table class="table table-striped">
                         <tr v-for="Result in PartyResults">
                             <td><img :src="Result.logo" style="height:50px;" /></td>
@@ -15,13 +16,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-7">
+        <div class="col-12 col-md-7">
+            <hr />
+            <p class="h1 text-center text-info"> {{ vote_reported_percentage }}% Reported </p>
+            <hr />
             <div class="row m-2">
-                <div class="col-3 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
+                <div class="col-12 col-md-2 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
                     <div class="card">
                         <div class="card-body" style="height: 100px;" :class="{ 'text-primary':LGA.leading_party}">
-                            <div style="font-size: 1.15em;"><strong>{{ LGA.name }}</strong></div>
-                            <img :src="LGA.logo" style="height: 48px;" />
+                            <div class="row p-0 m-0">
+                                <div class="col-3 col-md-12">
+                                    <img :src="LGA.logo" style="height: 48px;" />
+                                </div>
+                                <div class="col-9 col-md-12">
+                                    <div style="font-size: 1.15em;"><a :href="'/dash-/spread/'+LGA.id"><strong>{{ LGA.name }}</strong></a></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -37,6 +47,8 @@ export default {
     data(){
         return {
             time: "",
+            vote_total: "",
+            vote_reported_percentage: "",
             PartyResults: [],
             LGWinners: []
         }
@@ -52,6 +64,8 @@ export default {
                     var rData = response.data;
                     this.PartyResults = rData.results
                     this.time = rData.time
+                    this.vote_total = rData.total_votes
+                    this.vote_reported_percentage = rData.vote_global_reporting
                 })
                 .catch(error => {
                 }).finally({

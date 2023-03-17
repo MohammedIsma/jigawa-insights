@@ -14,8 +14,8 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="device-content card-box-style pt-3 pb-0 px-3">
+                            <div class="col-12 col-md-6 card">
+                                <div class="card-body text-black pt-3 pb-0 px-3">
                                     <p class="h2 text-center">&gt;&gt; {{ $Ward->name }} Ward &lt;&lt;</p>
                                     <div class="row justify-content-center">
                                         <div class="col-lg-4 col-md-4 col-sm-4">
@@ -57,66 +57,57 @@
                                 </div>
                             </div>
                         </div>
+                        <hr />
                         <div class="row">
-                            <div class="col-3">
-                                <p class="h5 text-warning">Key People</p>
-                                <div class="row justify-content-center">
-                                @foreach($Ward->Officials() as $Official)
-                                        <div class="col-lg-4 col-md-6 col-12">
-                                            <div class="single-friend rank{{$Official->ranking}}">
-                                                <div class="friend-content p-2">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h3><a href="#">{{ $Official->name }}</a> <span style="color:#369;font-size:.8em;"><small>{{$Official->phone_number}}</small></span></h3>
-                                                    </div>
-                                                    <ul class="info mt-0">
-                                                        <li class="p-0">
-                                                            <i class="ri-mail-line"></i> {{ $Official->OfficialType->name }}
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="col-9">
+                            <div class="col-12">
                                 <p class="h5 text-warning">PUs in {{$Ward->name}} ({{ $Ward->PollingUnits->count() }})</p>
-                                <div class="row">
+                                <form action="{{ route('submit_ward_results', $Ward->id) }}" method="POST" name="frmSubmitResults">
+                                    @csrf
+                                    <div class="row">
                                     <div class="col-md-12">
                                         <div class="bg-white">
-                                            <table class="table">
+                                            <table class="table table-striped table-hover">
                                                 <thead>
                                                 <tr>
-                                                    <th></th>
                                                     <th>DELIM.</th>
                                                     <th>PU</th>
-                                                    <th>Reg. Voters</th>
-                                                    <th class="text-center">Accreditation</th>
-                                                    <th class="text-center">Turnout</th>
+                                                    <th style="white-space: nowrap;">Reg. Voters</th>
+                                                    @foreach($Parties as $Party)
+                                                    <th class="text-center">{{ $Party->slug }}</th>
+                                                    @endforeach
+                                                    <th><button type="submit" class="btn btn-sm btn-success">save</button></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($Ward->PollingUnits as $PU)
+                                                    @if( ($loop->iteration % 15) == 0)
+                                                        <tr>
+                                                            <th>DELIM.</th>
+                                                            <th>PU</th>
+                                                            <th style="white-space: nowrap;">Reg. Voters</th>
+                                                            @foreach($Parties as $Party)
+                                                                <th class="text-center">{{ $Party->slug }}</th>
+                                                            @endforeach
+                                                            <th><button type="submit" class="btn btn-sm btn-success">save</button></th>
+                                                        </tr>
+                                                    @endif
                                                     <tr>
-                                                        <td>
-                                                            @if($PU->accredited_count_1)
-                                                                <span class="text-success">
-                                                                    <i class="fa fa-check"></i> Accredited
-                                                                </span>
-                                                            @else
-                                                                @if(canUpdatePollingUnit($PU))
-                                                                <a href="{{ route('submit_accreditation', $PU->id) }}" class="btn btn-sm btn-success px-4 py-1">Submit Accreditation</a>
-                                                                @endif
+                                                        <td style="white-space: nowrap;">{{ $PU->number }}</td>
+                                                        <td style="white-space: nowrap;">
+                                                            {{ $PU->name }}
+                                                            @if($PU->has_issue)
+                                                                <div class="bg-warning pl-1"><i class="fa fa-exclamation-triangle"></i> Has Issue!</div>
                                                             @endif
                                                         </td>
-                                                        <td>{{ $PU->number }}</td>
-                                                        <td>{{ $PU->name }}</td>
                                                         <td>{{ $PU->voter_count }}</td>
+                                                        @foreach($Parties as $Party)
                                                         <td class="text-center">
-                                                            {{ $PU->accredited_count_1 ?? 0}}
-                                                            <span class="text-{{getAccClass($PU->accreditation_percentage)}}"><small>({{ $PU->accreditation_percentage }})%</small></span>
+                                                            <input type="number" class="vote_input" name="pvote[{{$PU->id}}][{{$Party->id}}]" value="{{ $Results[$PU->id][$Party->id] ?? '' }}" />
                                                         </td>
-                                                        <td class="text-center bg-{{ getTurnClass($PU->turnout) }}">{{ $PU->turnout }}%</td>
+                                                        @endforeach
+                                                        <td>
+
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -124,6 +115,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

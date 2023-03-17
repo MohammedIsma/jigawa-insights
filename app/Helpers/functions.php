@@ -3,7 +3,9 @@
 use App\Models\LGA;
 use App\Models\PoliticalParty;
 use App\Models\PollingUnit;
+use App\Models\State;
 use App\Models\VotingResult;
+use App\Models\Ward;
 use Illuminate\Support\Facades\Cache;
 
 function getAccClass($cl){
@@ -50,9 +52,21 @@ function getPoliticalParty($pid){
     });
 }
 
-function getLGA($lid){
-    return Cache::remember("get_lga_$lid", 3600, function() use($lid){
-        return LGA::find($lid);
+function getState($sid){
+    return Cache::remember("get_sstate$sid", 3600, function() use($sid){
+        return State::find($sid);
+    });
+}
+
+function getLGA($sid){
+    return Cache::remember("get_slga$sid", 3600, function() use($sid){
+        return LGA::find($sid);
+    });
+}
+
+function getWard($wid){
+    return Cache::remember("get_wward$wid", 3600, function() use($wid){
+        return Ward::find($wid);
     });
 }
 
@@ -63,4 +77,8 @@ function VoteResults(PollingUnit $pu, PoliticalParty $p=null){
     }
 
     return $Result->orderBy("count", "desc")->get();
+}
+
+function getPopularParties(){
+    return PoliticalParty::whereIn('id', [7,14,13,17])->get();
 }

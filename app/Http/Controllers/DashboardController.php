@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     //
+    public function landing(){
+        return view("dash.landing");
+    }
+
     public function dash()
     {
         $state = State::count();
@@ -38,6 +42,9 @@ class DashboardController extends Controller
     }
     public function tally_dash(){
         return view("dash.tally_dashboard");
+    }
+    public function scoreboard_dash(){
+        return view("dash.scoreboard_dashboard");
     }
     public function spread_dash($lgaid=null, $wardid=null, $puid=null){
         return view("dash.spread_dashboard", compact('lgaid','wardid','puid'));

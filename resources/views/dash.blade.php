@@ -55,6 +55,20 @@
               <a href="/logout" class="btn btn-warning mx-5">Logout</a>
           </div>
         </div>
+        <div class="card mb-5 rounded-3 shadow-sm border-primary text-left">
+          <div class="card-body">
+            <form action="{{ route('find_pu') }}" method="POST" name="findPU">
+              <div class="row">
+                <div class="col-sm-12 col-md-4">
+                  <input type="text" name="pu_code" value="" placeholder="Enter PU Code here" required />
+                </div>
+                <div class="col-sm-12 col-md-1">
+                  <button class="btn btn-xs btn-primary">Search</button>
+                </div>
+              </div>
+            </form> 
+          </div>
+        </div>
       </div>
 </div>
 @endsection

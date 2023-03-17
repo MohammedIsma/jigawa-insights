@@ -6,11 +6,12 @@ use App\Http\Controllers\LGAController;
 use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\PollingUnitController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\WardController;
-use App\Jobs\UpdateCounts;
+use App\Jobs\FetchPUSlips;
+use App\Models\PollingUnit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Ward;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,31 +24,25 @@ use App\Models\Ward;
 |
 */
 
-Route::get('test', function(){
-    // foreach(\App\Models\LGA::all() as $L){
-    //     $ids = $L->Wards->pluck('id')->toArray();
-
-    //     $U = \App\Models\User::updateOrCreate([
-    //         "name" => $L->name . " Coordinator",
-    //         "email" => strtolower( str_replace(" ", "", $L->name) ) . "@gmail.com",
-    //     ],[
-    //         "password" => bcrypt("password"),
-    //         "allowed_wards" => $ids
-    //     ]);
-        
-    // }
-    $wids = Ward::whereIn("lga_id", [27])->pluck("id")->toArray();
-    UpdateCounts::dispatch($wids);
+Route::get('pull-slips', function() {
+    set_time_limit(0);
+    $PUs = PollingUnit::whereNull('has_image')->take(100)->get();
+    $PS = FetchPUSlips::dispatchSync($PUs);
 });
+
+Route::get('test', [TestController::class, 'test2']);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dash/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
-Route::get('/dash/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
-Route::get('/dash/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
-
+Route::group(["prefix" => "dash-"], function() {
+    Route::get('/', [DashboardController::class, 'landing'])->name('dash_landing');
+    Route::get('/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
+    Route::get('/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
+    Route::get('/scoreboard', [DashboardController::class, 'scoreboard_dash'])->name('scoreboard_dash');
+    Route::get('/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
+});
 
 Route::group(["middleware"=>"auth"], function() {
 
@@ -56,7 +51,7 @@ Route::group(["middleware"=>"auth"], function() {
 
     Route::get('/all', [HomeController::class, 'show_all'])->name("show_all_summary");
 
-    
+
 //    Route::get('/exec_dash', [DashboardController::class, 'exec_dash'])->name('exec_dash');
 
     Route::resource('/states', StateController::class);
@@ -66,6 +61,7 @@ Route::group(["middleware"=>"auth"], function() {
 
     Route::get('/submit/accreditation/{pu_id}', [PollingUnitController::class, 'submit_accreditation'])->name("submit_accreditation");
     Route::post('/submit/accreditation/{pu_id}', [PollingUnitController::class, 'fn_submit_accreditation'])->name("submit_accreditation");
+    Route::post('/submit/ward_results/{pu_id}', [PollingUnitController::class, 'fn_submit_ward_results'])->name("submit_ward_results");
     Route::get('/submit/agent/{pu_id}', [PollingUnitController::class, 'submit_agent'])->name("submit_agent");
     Route::post('/submit/agent/{pu_id}', [PollingUnitController::class, 'fn_submit_agent'])->name("submit_agent");
     Route::post('/submit/results/{pu_id}', [PollingUnitController::class, 'fn_submit_results'])->name("submit_results");
@@ -75,6 +71,9 @@ Route::group(["middleware"=>"auth"], function() {
     Route::get('/lga/officials/{lga}', [OfficialController::class, 'officialsByLGA']);
     Route::get('/ward/officials/{ward}', [OfficialController::class, 'officialsByWard']);
     Route::get('/unit/officials/{unit}', [OfficialController::class, 'officialsByUnit']);
+
+    Route::get('/clear_results/{pu}', [PollingUnitController::class, 'delete_results'])->name("delete_results");
+    Route::post('/find_pu', [PollingUnitController::class, 'search'])->name("find_pu");
 
 });
 
