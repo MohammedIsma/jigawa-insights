@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PollingUnit extends Model
@@ -11,7 +10,7 @@ class PollingUnit extends Model
     protected $casts = [
         "has_issue" => "boolean"
     ];
-    
+
     public function LGA(){
         return $this->belongsTo(LGA::class, 'lga_id', 'id');
     }

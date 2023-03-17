@@ -1,6 +1,6 @@
 <template>
     <div class="row m-2">
-        <div class="col-5">
+        <div class="col-12 col-md-5">
             <div class="card">
                 <div class="card-body">
                     <p class="h6">Tally Count - {{ time }}</p>
@@ -16,16 +16,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-7">
+        <div class="col-12 col-md-7">
             <hr />
             <p class="h1 text-center text-info"> {{ vote_reported_percentage }}% Reported </p>
             <hr />
             <div class="row m-2">
-                <div class="col-3 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
+                <div class="col-12 col-md-2 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
                     <div class="card">
                         <div class="card-body" style="height: 100px;" :class="{ 'text-primary':LGA.leading_party}">
-                            <div style="font-size: 1.15em;"><a :href="'/dash/spread/'+LGA.id"><strong>{{ LGA.name }}</strong></a></div>
-                            <img :src="LGA.logo" style="height: 48px;" />
+                            <div class="row p-0 m-0">
+                                <div class="col-3 col-md-12">
+                                    <img :src="LGA.logo" style="height: 48px;" />
+                                </div>
+                                <div class="col-9 col-md-12">
+                                    <div style="font-size: 1.15em;"><a :href="'/dash-/spread/'+LGA.id"><strong>{{ LGA.name }}</strong></a></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

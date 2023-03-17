@@ -68,7 +68,7 @@
                                 <p class="h5 text-warning">Wards in {{$LGA->name}}</p>
                                 <div class="row">
                                     @foreach($LGA->Wards as $Ward)
-                                        <div class="col-xxl-1 col-md-2 col-sm-4 mb-5">
+                                        <div class="col-12 col-xxl-2 col-md-2 col-sm-4 mb-5">
                                             <div class="single-folder text-center">
                                                 <a href="{{ route('ward.show', $Ward->id) }}">
                                                     <div class="file">

@@ -9,7 +9,7 @@
                     <div class="quick-access">
                         <div class="row">
                             @foreach($State->lga as $lga)
-                                <div class="col-xxl-1 col-md-2 col-sm-4 my-1 mx-0 py-4" style="border:1px solid #f00;">
+                                <div class="col-12 col-xxl-2 col-md-2 col-sm-4 m-0 mx-0 py-4" style="border:1px solid rgba(255,255,255,.2);">
                                     <div class="single-folder text-center">
                                         <a href="{{ route('lga.show', $lga->id) }}">
                                             <div class="file">

@@ -6,13 +6,12 @@ use App\Http\Controllers\LGAController;
 use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\PollingUnitController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\WardController;
 use App\Jobs\FetchPUSlips;
-use App\Jobs\UpdateCounts;
-use App\Models\VotingResult;
+use App\Models\PollingUnit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Ward;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,69 +26,23 @@ use App\Models\Ward;
 
 Route::get('pull-slips', function() {
     set_time_limit(0);
-    $PUs = \App\Models\PollingUnit::whereNull('has_image')->take(100)->get();
+    $PUs = PollingUnit::whereNull('has_image')->take(100)->get();
     $PS = FetchPUSlips::dispatchSync($PUs);
 });
-Route::get('test', function(){
-    $iids = [12,23];
-    $PUs = \App\Models\PollingUnit::whereIn('lga_id', $iids)->get();
 
-    foreach($PUs as $pu){
-
-        $VR = VotingResult::selectRaw("political_party_id,SUM(count) as tally")
-            ->where("polling_unit_id", $pu->id)
-            ->having("tally",">",0)
-            ->groupBy("political_party_id")
-            ->get();
-
-        $voted = $VR->sum('tally');
-
-        echo sprintf("%s!%s!%s!%s!%s!%s",
-            $pu->LGA->name,
-            $pu->Ward->name,
-            $pu->name,
-            $pu->voter_count,
-            $voted,
-            round($voted/$pu->voter_count,2)
-                );
-        echo "<br />";
-    }
-
-    exit;
-    // foreach(\App\Models\LGA::all() as $L){
-    //     $ids = $L->Wards->pluck('id')->toArray();
-
-    //     $U = \App\Models\User::updateOrCreate([
-    //         "name" => $L->name . " Coordinator",
-    //         "email" => strtolower( str_replace(" ", "", $L->name) ) . "@gmail.com",
-    //     ],[
-    //         "password" => bcrypt("password"),
-    //         "allowed_wards" => $ids
-    //     ]);
-
-    // }
-//    $wids = Ward::whereIn("lga_id", [1])->pluck("id")->toArray();
-//    UpdateCounts::dispatch($wids);
-
-    $with_results = \App\Models\VotingResult::pluck("polling_unit_id")->toArray();
-    foreach(\App\Models\PollingUnit::orderBy("lga_id")->orderBy("ward_id")->get() as $pu){
-        if(!in_array($pu->id, $with_results)) {
-            echo sprintf("%s|%s|%s<br />",
-                $pu->LGA->name,
-                $pu->Ward->name,
-                $pu->name,
-            );
-        }
-    }
-});
+Route::get('test', [TestController::class, 'test2']);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dash/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
-Route::get('/dash/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
-Route::get('/dash/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
+Route::group(["prefix" => "dash-"], function() {
+    Route::get('/', [DashboardController::class, 'landing'])->name('dash_landing');
+    Route::get('/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
+    Route::get('/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
+    Route::get('/scoreboard', [DashboardController::class, 'scoreboard_dash'])->name('scoreboard_dash');
+    Route::get('/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
+});
 
 
 Route::group(["middleware"=>"auth"], function() {

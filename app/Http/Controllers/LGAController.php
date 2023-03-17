@@ -71,14 +71,29 @@ class LGAController extends Controller
             $LGA_Winners[] = [
                 "id" => $lga->id,
                 "name" => $lga->name,
-                "logo" => $lp ? $p->logo : null,
+                "logo" => $lp ? $p->logo : "/image/parties/nan.jpg",
                 "leading_party" => $lp ? $p->name : null,
                 "leading_count" => $lp ? $lp->count : null,
             ];
         }
+
+        $reported_pus = DB::table('voting_results')->distinct('polling_unit_id')->count('polling_unit_id');
+
+        $apcvotes = VotingResult::where('political_party_id', 7)->sum('count');
+        $pdpvotes = VotingResult::where('political_party_id', 14)->sum('count');
         return [
             "success" => true,
             "payload" => [
+                "APCTotal" => number_format( $apcvotes ),
+                "PDPTotal" => number_format( $pdpvotes ),
+                "diff" => [
+                    "difference" => $apcvotes - $pdpvotes,
+                    "apc_perc" => $apcvotes / ($apcvotes+$pdpvotes),
+                    "pdp_perc" => $pdpvotes / ($apcvotes+$pdpvotes)
+                ],
+                "progress" => [
+                    "percentage" => round(($reported_pus/PollingUnit::count()) * 100,2)
+                ],
                 "LGWinners" => $LGA_Winners,
                 "time" => date("H:i:s - dM")
             ]
