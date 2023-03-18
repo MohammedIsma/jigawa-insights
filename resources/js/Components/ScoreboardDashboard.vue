@@ -33,7 +33,7 @@
     <div class="row m-2">
         <div class="col-12">
             <div class="row m-2">
-                <div class="col-12 col-md-2 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
+                <div class="col-12 col-md-3 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
                     <div class="card">
                         <div class="card-body" style="height: 100px;" :class="{ 'text-primary':LGA.leading_party}">
                             <div class="row p-0 m-0">
