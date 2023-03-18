@@ -2,10 +2,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="Container">
-
                 <input type="radio" class="radio" name="progress" value="twentyfive" id="twentyfive">
                 <label for="twentyfive" class="label">Reporting Progress - {{ vote_reported_percentage }}%</label>
-
                 <div class="progress">
                     <div class="progress-bar" :style="'width:'+vote_reported_percentage+'%'"></div>
                 </div>
@@ -15,31 +13,30 @@
     <div class="row py-2">
         <div class="col-6 text-end">
             <div class="row m-0 p-0">
-                <div class="col-md-11 text-end">
+                <div class="col-md-10 text-end">
                     <img src="/image/ours.png" height="200" />
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2 text-end">
                     APC
-                    <p class="h3 text-success">{{ APCTotal }}</p>
+                    <p class="h3 text-success">1{{ APCTotal }}</p>
                 </div>
             </div>
         </div>
         <div class="col-6">
             <div class="row m-0 p-0">
-                <div class="col-md-1 mr-2">
+                <div class="col-md-2 mr-2">
                     PDP
-                    <p class="h3 text-warning">{{ PDPTotal }}</p>
+                    <p class="h3 text-warning">11{{ PDPTotal }}</p>
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-10">
                     <img src="/image/theirs.png" height="200" />
                 </div>
             </div>
         </div>
         <div class="col-12 text-center">
-            <div class="h6 text-success" :class="{'text-danger': diff<0}">
-                <span v-if="diff>0">+</span>
-                <span v-if="diff<0">-</span>
-                {{ diff }}
+            <div class="h5 text-success" :class="{'text-danger': diff<0}">
+                <div v-if="diff>0">+{{ diff }}<br /><small>{{ gap }}%</small></div>
+                <div v-if="diff<0">-{{ diff }}<br /><small>{{ gap }}%</small></div>
             </div>
         </div>
     </div>
@@ -96,6 +93,7 @@ export default {
                     this.PDPTotal = rData.payload.PDPTotal
                     this.LGWinners = rData.payload.LGWinners
                     this.diff = rData.payload.diff.difference
+                    this.gap = rData.payload.diff.gap
                     this.APCPerc = rData.payload.diff.apc_perc
                     this.PDPPerc = rData.payload.diff.pdp_perc
                     this.vote_reported_percentage = rData.payload.progress.percentage
