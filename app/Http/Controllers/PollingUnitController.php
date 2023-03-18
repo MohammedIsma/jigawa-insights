@@ -228,13 +228,14 @@ class PollingUnitController extends Controller
         ]);
         $PollingUnit = $Issue->PollingUnit;
 
-        $String = sprintf("%s\n%s\n==================\nLGA  : %s\nWard : %s\nPUnit: %s\nDELIM: %s\n------------------\n%s",
+        $String = sprintf("%s\n%s\n==================\nLGA  : %s\nWard : %s\nPUnit: %s\nDELIM: %s\nVOTERS: %d\n------------------\n%s",
             "INCIDENCE REPORT",
             $Issue->created_at->format("d M h:ia"),
             $PollingUnit->LGA->name,
             $PollingUnit->Ward->name,
             $PollingUnit->name,
             $PollingUnit->number,
+            $PollingUnit->voter_count,
             $Issue->description,
         );
         echo nl2br( $String );
