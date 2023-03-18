@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-2 text-end">
                     APC
-                    <p class="h3 text-success">1{{ APCTotal }}</p>
+                    <p class="h3 text-success">{{ APCTotal }}</p>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <div class="row m-0 p-0">
                 <div class="col-md-2 mr-2">
                     PDP
-                    <p class="h3 text-warning">11{{ PDPTotal }}</p>
+                    <p class="h3 text-warning">{{ PDPTotal }}</p>
                 </div>
                 <div class="col-md-10">
                     <img src="/image/theirs.png" height="200" />
