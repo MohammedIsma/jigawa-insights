@@ -14,6 +14,7 @@
                     <th>WARD</th>
                     <th>DELIM</th>
                     <th>POLLING UNIT</th>
+                    <th>AFF. VOTERS</th>
                     <th>DESCRIPTION</th>
                 </tr>
                 </thead>
@@ -25,6 +26,7 @@
                     <td style="white-space: nowrap;">{{ incident.ward }}</td>
                     <td style="white-space: nowrap;">{{ incident.pu.number }}</td>
                     <td style="white-space: nowrap;">{{ incident.pu.name }}</td>
+                    <td style="white-space: nowrap;">{{ incident.pu.voter_count }}</td>
                     <td>{{ incident.description }}</td>
                 </tr>
                 </tbody>
@@ -57,7 +59,7 @@ export default {
                 .catch(error => {
                 }).finally({
             });
-            setTimeout(function () { this.getIncidents() }.bind(this), 5000)
+            setTimeout(function () { this.getIncidents() }.bind(this), 10000)
         }
     }
 }

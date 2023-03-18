@@ -106,7 +106,7 @@ export default {
                     this.loading = false
                 }).finally({
             });
-            setTimeout(function () { this.loadLGAs() }.bind(this), 5000)
+            setTimeout(function () { this.loadLGAs() }.bind(this), 10000)
         }
     }
 }
