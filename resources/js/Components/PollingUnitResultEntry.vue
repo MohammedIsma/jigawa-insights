@@ -22,7 +22,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="PU in PollingUnits">
+        <tr v-for="PU in PollingUnits" :class="{'bg-warning': PU.incidents.length>0}">
             <td style="white-space: nowrap;">{{ PU.number }}</td>
             <td style="white-space: nowrap;">
                 {{ PU.name }}
@@ -49,7 +49,8 @@
             </td>
             <td>
                 <div v-if="user_id==1">
-
+                    <a :href="'/report_issue/'+PU.id">Report Issue</a><br />
+                    <a v-if="PU.incidents.length>0" :href="'/view_issues/'+PU.id">View Issues</a>
                 </div>
             </td>
         </tr>

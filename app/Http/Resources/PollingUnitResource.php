@@ -30,6 +30,7 @@ class PollingUnitResource extends JsonResource
             "accredited_count" => number_format($this->accredited_count_1),
             "is_reported" => $reported,
             "turnout" => round(($this->accredited_count_1/$this->voter_count) * 100, 2),
+            "incidents" => $this->Incidents
         ];
 
         if($lead_party){

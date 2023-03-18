@@ -65,6 +65,9 @@ Route::group(["middleware"=>"auth"], function() {
     Route::get('/submit/agent/{pu_id}', [PollingUnitController::class, 'submit_agent'])->name("submit_agent");
     Route::post('/submit/agent/{pu_id}', [PollingUnitController::class, 'fn_submit_agent'])->name("submit_agent");
     Route::post('/submit/results/{pu_id}', [PollingUnitController::class, 'fn_submit_results'])->name("submit_results");
+    Route::get('/report_issue/{pu_id}', [PollingUnitController::class, 'report_issue'])->name("report_issue");
+    Route::post('/report_issue/{pu_id}', [PollingUnitController::class, 'fn_report_issue'])->name("report_issue");
+    Route::get('/view_issues/{pu_id}', [PollingUnitController::class, 'view_issues'])->name("view_issues");
 
     Route::resource('/officials', OfficialController::class);
     Route::get('/state/officials/{state}', [OfficialController::class, 'officialsByState']);
