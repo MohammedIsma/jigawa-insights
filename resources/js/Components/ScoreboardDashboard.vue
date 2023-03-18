@@ -12,14 +12,28 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row py-2">
         <div class="col-6 text-end">
-            APC
-            <p class="h3 text-success">{{ APCTotal }}</p>
+            <div class="row m-0 p-0">
+                <div class="col-md-11 text-end">
+                    <img src="/image/ours.png" height="100" />
+                </div>
+                <div class="col-md-1">
+                    APC
+                    <p class="h3 text-success">{{ APCTotal }}</p>
+                </div>
+            </div>
         </div>
         <div class="col-6">
-            PDP
-            <p class="h3 text-warning">{{ PDPTotal }}</p>
+            <div class="row m-0 p-0">
+                <div class="col-md-1 mr-2">
+                    PDP
+                    <p class="h3 text-warning">{{ PDPTotal }}</p>
+                </div>
+                <div class="col-md-11">
+                    <img src="/image/theirs.png" height="100" />
+                </div>
+            </div>
         </div>
         <div class="col-12 text-center">
             <div class="h6 text-success" :class="{'text-danger': diff<0}">
