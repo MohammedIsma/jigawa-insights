@@ -48,6 +48,9 @@
                         :name="'pvote['+PU.id+']['+Party.id+']'" />
             </td>
             <td>
+                <div v-if="user_id==1">
+
+                </div>
             </td>
         </tr>
         </tbody>
