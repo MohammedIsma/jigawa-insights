@@ -240,7 +240,7 @@ class PollingUnitController extends Controller
         );
         echo nl2br( $String );
         echo "<br /><br /><br /><br /><br /><br />";
-        echo "<a href='/home'>Home</a>";
+        echo "<a href='/states/1'>Home</a>";
 
 
     }
