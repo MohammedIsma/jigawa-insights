@@ -70,6 +70,12 @@ function getWard($wid){
     });
 }
 
+function getPollingUnit($puid){
+    return Cache::remember("get_ppu$puid", 3600, function() use($puid){
+        return PollingUnit::find($puid);
+    });
+}
+
 function VoteResults(PollingUnit $pu, PoliticalParty $p=null){
     $Result = VotingResult::where("polling_unit_id", $pu->id);
     if($p){

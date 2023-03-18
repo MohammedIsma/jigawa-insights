@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\LGAController;
-use App\Http\Controllers\PollingUnitController;
-use App\Http\Controllers\ResultsController;
-use App\Http\Controllers\StateController;
-use App\Http\Controllers\WardController;
+use App\Http\Controllers\{LGAController, PollingUnitController, ResultsController, StateController, WardController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +32,9 @@ Route::get('/ward', [WardController::class, 'index']);
 Route::get('/pu/{id}', [PollingUnitController::class, 'show']);
 Route::get('/pu', [PollingUnitController::class, 'index']);
 
+Route::get('/ajx_get_incidences', [ResultsController::class, 'ajx_incidences']);
 Route::get('/ajx_get_tally_results', [ResultsController::class, 'ajx_get_tally_results']);
+
 Route::get('/ajx_get_lgas', [LGAController::class, 'ajx_get_lgas']);
 Route::get('/ajx_get_wards/{lga_id}', [LGAController::class, 'ajx_get_wards']);
 Route::get('/ajx_get_lga_winners', [LGAController::class, 'ajx_get_lga_winners']);
@@ -46,3 +44,4 @@ Route::get('/ajx_get_lga_pu_results_tally/{ward_id}', [LGAController::class, 'aj
 
 Route::get('/ajx_get_ward_result_entry/{ward_id}', [WardController::class, 'ajx_get_ward_sheet']);
 Route::post('/ajx_submit_ward_result_entry/{ward_id}', [WardController::class, 'ajx_submit_ward_sheet']);
+

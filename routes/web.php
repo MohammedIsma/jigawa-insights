@@ -41,6 +41,7 @@ Route::group(["prefix" => "dash-"], function() {
     Route::get('/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
     Route::get('/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
     Route::get('/scoreboard', [DashboardController::class, 'scoreboard_dash'])->name('scoreboard_dash');
+    Route::get('/prob', [DashboardController::class, 'problem_dash'])->name('problem_dash');
     Route::get('/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
 });
 
