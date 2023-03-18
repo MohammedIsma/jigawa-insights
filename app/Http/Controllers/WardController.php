@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PollingUnitResource;
+use App\Jobs\UpdateCounts;
 use App\Models\LGA;
 use App\Models\PoliticalParty;
 use App\Models\VotingResult;
@@ -170,6 +171,8 @@ class WardController extends Controller
                 ]);
             }
         }
+
+        UpdateCounts::dispatch([$ward_id]);
 
         return response()->json([
             "success" => true,
