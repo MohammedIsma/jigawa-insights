@@ -6,12 +6,17 @@ use App\Models\LGA;
 use App\Models\PollingUnit;
 use App\Models\VotingResult;
 use App\Models\Ward;
+use App\Jobs\UpdateCounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class TestController extends Controller
 {
     public function test(){
+
+        UpdateCounts::dispatchSync([257,252,253,55,24]);
+
+        exit;
         $parties = getPopularParties();
         $pids = $parties->pluck("id")->toArray();
 
