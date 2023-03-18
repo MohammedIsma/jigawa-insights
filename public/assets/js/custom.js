@@ -2,7 +2,7 @@
 	'use strict';
 
 	// Sidebar Menu JS
-	$('#sidebar-menu').metisMenu();
+	// $('#sidebar-menu').metisMenu();
 
 	// Click Event JS
 	$('.go-top').on('click', function() {
@@ -67,50 +67,10 @@
 	});
 
 	$(document).ready(function(){
-		$('[data-toggle="tooltip"]').tooltip();
+		// $('[data-toggle="tooltip"]').tooltip();
 	});
 
 	// Performers Slider JS
-	$('.performers-slider').owlCarousel({
-		loop: true,
-		margin: 30,
-		nav: false,
-		dots: false,
-		autoplay: true,
-		stagePadding: 50,
-		responsive: {
-			0:{
-				items:1,
-				stagePadding: 0,
-			},
-			375:{
-				items:2,
-				stagePadding: 0,
-			},
-			576:{
-				items:3,
-				stagePadding: 0,
-			},
-			768:{
-				items:4,
-				stagePadding: 0,
-			},
-			1200:{
-				items:3,
-				stagePadding: 0,
-			},
-			1320:{
-				items:4,
-				stagePadding: 0,
-			},
-			1400:{
-				items:4,
-			},
-			1700:{
-				items:5,
-			}
-		}
-	})
 
 	// Sidebar Active JS
 	$('.sidebar-menu ul li').click(function(){
@@ -255,7 +215,7 @@
 
 	// TxtEditor JS
 	$(document).ready(function() {
-		$("#txtEditor").Editor();
+		// $("#txtEditor").Editor();
 	});
 
 })(jQuery);
