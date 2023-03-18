@@ -30,7 +30,7 @@ Route::get('pull-slips', function() {
     $PS = FetchPUSlips::dispatchSync($PUs);
 });
 
-Route::get('test', [TestController::class, 'test2']);
+Route::get('test', [TestController::class, 'test']);
 
 Route::get('/', function () {
     return redirect('/home');
