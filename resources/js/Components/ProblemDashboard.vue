@@ -57,7 +57,7 @@ export default {
                 .catch(error => {
                 }).finally({
             });
-            setTimeout(function () { this.getIncidents() }.bind(this), 5000)
+            setTimeout(function () { this.getIncidents() }.bind(this), 10000)
         }
     }
 }
