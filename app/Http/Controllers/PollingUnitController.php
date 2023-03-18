@@ -228,11 +228,11 @@ class PollingUnitController extends Controller
         ]);
         $PollingUnit = $Issue->PollingUnit;
 
-        $String = sprintf("%s\n%s\n==================\nLGA  : %s\nWard : %s\nPUnit: %s\nDELIM: %s\nVOTERS: %d\n------------------\n%s",
+        $String = sprintf("%s\n%s\n==================\n%s LGA, %s Ward\nPUnit: %s\nDELIM: %s\nVOTERS: %d\n------------------\n%s",
             "INCIDENCE REPORT",
             $Issue->created_at->format("d M h:ia"),
-            $PollingUnit->LGA->name,
-            $PollingUnit->Ward->name,
+            ucwords(strtolower($PollingUnit->LGA->name)),
+            ucwords(strtolower($PollingUnit->Ward->name)),
             $PollingUnit->name,
             $PollingUnit->number,
             $PollingUnit->voter_count,
