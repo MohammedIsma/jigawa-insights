@@ -111,6 +111,7 @@ export default {
                     this.is_saving = false;
                 })
                 .catch(error => {
+                    alert("ERROR. NOT SAVED!")
                     this.is_saving = false;
                 }).finally({
             });

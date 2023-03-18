@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="Container">
                 <input type="radio" class="radio" name="progress" value="twentyfive" id="twentyfive">
-                <label for="twentyfive" class="label">Reporting Progress - {{ vote_reported_percentage }}%</label>
+                <label for="twentyfive" class="label">Reporting Progress - {{ vote_reported_percentage }}%<br /><small>{{ time }}</small></label>
                 <div class="progress d-none d-md-block">
                     <div class="progress-bar" :style="'width:'+vote_reported_percentage+'%'"></div>
                 </div>

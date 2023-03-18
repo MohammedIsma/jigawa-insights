@@ -102,7 +102,7 @@ class LGAController extends Controller
                     "percentage" => round(($reported_pus/PollingUnit::count()) * 100,2)
                 ],
                 "LGWinners" => $LGA_Winners,
-                "time" => date("H:i:s - dM")
+                "time" => date("dM -    h:i:a")
             ]
         ];
     }
