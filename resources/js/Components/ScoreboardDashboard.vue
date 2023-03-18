@@ -1,10 +1,10 @@
 <template>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="Container">
                 <input type="radio" class="radio" name="progress" value="twentyfive" id="twentyfive">
                 <label for="twentyfive" class="label">Reporting Progress - {{ vote_reported_percentage }}%</label>
-                <div class="progress">
+                <div class="progress d-none d-md-block">
                     <div class="progress-bar" :style="'width:'+vote_reported_percentage+'%'"></div>
                 </div>
             </div>
@@ -14,33 +14,34 @@
         <div class="col-6 text-end">
             <div class="row m-0 p-0">
                 <div class="col-md-10 text-end">
-                    <img src="/image/ours.png" height="200" />
+                    <img src="/image/ours.png" class="img-fluid" height="200" max />
                 </div>
-                <div class="col-md-2 text-end">
+                <div class="col-md-2 text-end text-success">
                     APC
                     <p class="h3 text-success">{{ APCTotal }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6 text-start">
             <div class="row m-0 p-0">
-                <div class="col-md-2 mr-2">
+                <div class="col-md-2 mr-2 text-warning">
                     PDP
                     <p class="h3 text-warning">{{ PDPTotal }}</p>
                 </div>
                 <div class="col-md-10">
-                    <img src="/image/theirs.png" height="200" />
+                    <img src="/image/theirs.png" class="img-fluid" height="200" />
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-12 text-center">
-            <div class="h5 text-success" :class="{'text-danger': diff<0}">
+            <div class="h4 py-2 bg-success text-white" :class="{'bg-danger': diff<0}">
                 <div v-if="diff>0">+{{ diff }}<br /><small>{{ gap }}%</small></div>
                 <div v-if="diff<0">-{{ diff }}<br /><small>{{ gap }}%</small></div>
             </div>
         </div>
     </div>
-    <hr />
     <div class="row m-2">
         <div class="col-12">
             <div class="row m-2">
@@ -114,14 +115,14 @@ export default {
 .Container {
     background-color:#444;
     margin: 0;
-    padding: 25px;
+    padding: 10px 0;
     width: 100%;
     text-align: center;
 }
 
 .Container .progress {
     margin: 0 auto;
-    width: 400px;
+    width: 25%;
 }
 
 .progress {
