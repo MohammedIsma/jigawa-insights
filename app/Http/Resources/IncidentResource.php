@@ -26,7 +26,8 @@ class IncidentResource extends JsonResource
             "ward" => $W->name,
             "pu" => [
                 "number" => $PU->number,
-                "name" => $PU->name
+                "name" => $PU->name,
+                "voter_count" => $PU->voter_count
             ],
             "description" => $this->description,
             "datetime" => $this->created_at->format("d-M h:ia")
