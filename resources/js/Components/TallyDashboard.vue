@@ -70,7 +70,7 @@ export default {
                 .catch(error => {
                 }).finally({
             });
-            setTimeout(function () { this.getTotalTallies() }.bind(this), 10000)
+            setTimeout(function () { this.getTotalTallies() }.bind(this), 15000)
         },
         loadLGAs(){
             axios.get("/api/ajx_get_lga_winners")
