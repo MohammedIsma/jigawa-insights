@@ -139,7 +139,6 @@ class WardController extends Controller
         foreach($VR as $vr){
             $Results[$vr->polling_unit_id][$vr->political_party_id] = $vr->count;
         }
-
         return [
             "success" => true,
             "polling_units" => PollingUnitResource::collection($Ward->PollingUnits),

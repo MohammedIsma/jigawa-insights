@@ -16,7 +16,10 @@
             <th>DELIM.</th>
             <th>PU</th>
             <th style="white-space: nowrap;">Reg. Voters</th>
-            <th></th>
+            <th>
+                <i @click="enableAll()" v-if="enable_pus.length<PollingUnits.length" class="fa fa-lock text-danger"></i>
+                <i @click="disableAll()" v-if="enable_pus.length==PollingUnits.length" class="fa fa-unlock text-success"></i>
+            </th>
             <th class="text-center" v-for="Party in Parties">{{ Party.slug }}</th>
             <th><button @click="SavePUDate" type="submit" class="btn btn-sm btn-success">save</button></th>
         </tr>
@@ -121,6 +124,12 @@ export default {
         },
         enablePU(puid){
             this.enable_pus.push(puid)
+        },
+        enableAll(puid){
+            this.enable_pus = this.PollingUnits.map(x => x.id)
+        },
+        disableAll(puid){
+            this.enable_pus = []
         }
     }
 }
