@@ -66,7 +66,7 @@
                                     <div class="row">
                                     <div class="col-md-12">
                                         <div class="bg-white p-3">
-                                            <polling-unit-result-entry :ward_id="{{$Ward->id}}"></polling-unit-result-entry>
+                                            <polling-unit-result-entry :user_id="{{ auth()->user()->id }}" :ward_id="{{$Ward->id}}"></polling-unit-result-entry>
                                         </div>
                                     </div>
                                 </div>

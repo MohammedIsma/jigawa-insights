@@ -45,3 +45,4 @@ Route::get('/ajx_get_wardparties_with_tally/{lga_id}', [LGAController::class, 'a
 Route::get('/ajx_get_lga_pu_results_tally/{ward_id}', [LGAController::class, 'ajx_get_lga_pu_results_tally']);
 
 Route::get('/ajx_get_ward_result_entry/{ward_id}', [WardController::class, 'ajx_get_ward_sheet']);
+Route::post('/ajx_submit_ward_result_entry/{ward_id}', [WardController::class, 'ajx_submit_ward_sheet']);

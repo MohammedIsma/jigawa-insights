@@ -44,7 +44,8 @@
                        :disabled="is_saving || !enable_pus.includes(PU.id)"
                        type="number"
                        class="vote_input"
-                       :name="'pvote['+PU.id+']['+Party.id+']'" />
+                       v-model="Results[PU.id][Party.id]"
+                        :name="'pvote['+PU.id+']['+Party.id+']'" />
             </td>
             <td>
             </td>
@@ -58,7 +59,7 @@
 export default {
     name: 'polling-unit-result-entry',
     components: {},
-    props: [ 'ward_id'],
+    props: [ 'ward_id', 'user_id'],
     data(){
         return {
             is_loading: false,
@@ -90,8 +91,20 @@ export default {
         },
         SavePUDate(){
             this.is_saving = true;
-            axios.get("/api/ajx_get_ward_result_entry/" + this.ward_id)
+            console.log(this.Results);
+
+            let p = {
+                Results: this.Results,
+                user_id: this.user_id
+            }
+            axios.post("/api/ajx_submit_ward_result_entry/" + this.ward_id, p)
                 .then(response => {
+                    if(response.data.success){
+                        this.getPollingUnitsSheet();
+                        alert("Saved")
+                        this.enable_pus = [];
+                    }
+                    this.is_saving = false;
                 })
                 .catch(error => {
                     this.is_saving = false;
