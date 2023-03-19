@@ -19,17 +19,20 @@
                 <div class="col-md-2 text-end text-success">
                     APC
                     <p class="h3 text-success">{{ APCTotal }}</p>
+                    <div class="py-2 bg-success text-white" style="border:1px solid #ddd; text-align:center; border-radius: 7px;">
+                        <i class="fa fa-thumbs-up fa-3x"></i><br />Winner
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-6 text-start">
+        <div class="col-6 text-start text-muted">
             <div class="row m-0 p-0">
-                <div class="col-md-2 mr-2 text-warning">
+                <div class="col-md-2 mr-2 text-muted">
                     PDP
-                    <p class="h3 text-warning">{{ PDPTotal }}</p>
+                    <p class="h3 text-muted">{{ PDPTotal }}</p>
                 </div>
                 <div class="col-md-10">
-                    <img src="/image/theirs.png" class="img-fluid" height="200" />
+                    <img src="/image/theirs.png" class="img-fluid greyed-out" height="200" />
                 </div>
             </div>
         </div>
@@ -173,5 +176,8 @@ export default {
 .radio:checked + .label {
     color: white;
     background: rgba(0, 0, 0, 0.25);
+}
+.greyed-out{
+    filter: grayscale(100%);
 }
 </style>

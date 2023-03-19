@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 {{--    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">--}}
 {{--    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">--}}
 {{--    <link rel="stylesheet" href="/assets/css/animate.min.css">--}}
