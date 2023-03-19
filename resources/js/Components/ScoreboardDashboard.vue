@@ -34,6 +34,10 @@
             </div>
         </div>
     </div>
+    <div class="text-center mb-2" style="top: 100px; left:40%; font-size:1.1em; line-height:100%;">
+        Powered by NORPOL<br />
+        <span class="text-muted"><small>in partnership with Jigawa APC<br />Auxilliary Situation Room (Kazaure)</small></span>
+    </div>
     <div class="row">
         <div class="col-12 text-center">
             <div class="h4 py-2 bg-success text-white" :class="{'bg-danger': diff<0}">
