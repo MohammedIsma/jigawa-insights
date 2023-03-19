@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="text-center mb-2" style="top: 100px; left:40%; font-size:1.1em; line-height:100%;">
-        Powered by NORPOL<br />
+        Powered by <strong>NORPOL</strong><br />
         <span class="text-muted"><small>in partnership with Jigawa APC<br />Auxilliary Situation Room (Kazaure)</small></span>
     </div>
     <div class="row">
