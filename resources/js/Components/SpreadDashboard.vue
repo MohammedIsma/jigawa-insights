@@ -89,7 +89,7 @@
                         </thead>
                         <tbody>
                         <tr v-for="PU in PUs">
-                            <td>{{ PU.name }}</td>
+                            <td>{{ PU.number}} - {{ PU.name }}</td>
                             <td class="text-center">{{ PU.voter_count }}</td>
                             <td class="text-center">{{ PU.accredited_count }}</td>
                             <td class="text-center">
