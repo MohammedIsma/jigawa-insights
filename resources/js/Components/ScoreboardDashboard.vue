@@ -20,7 +20,7 @@
                     APC
                     <p class="h3 text-success">{{ APCTotal }}</p>
                     <div class="py-2 bg-success text-white" style="border:1px solid #ddd; text-align:center; border-radius: 7px;">
-                        <i class="fa fa-thumbs-up fa-3x"></i><br />Winner
+                        <i class="fa fa-thumbs-up fa-2x"></i><br />Winner
                     </div>
                 </div>
             </div>
