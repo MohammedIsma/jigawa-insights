@@ -81,6 +81,12 @@ class LGAController extends Controller
 
         $apcvotes = VotingResult::where('political_party_id', 7)->sum('count');
         $pdpvotes = VotingResult::where('political_party_id', 14)->sum('count');
+        $allvotes = VotingResult::sum('count');
+
+        $apc_perc = ($apcvotes+$pdpvotes)>0 ? $apcvotes / ($apcvotes+$pdpvotes) : 0;
+        $pdp_perc = ($apcvotes+$pdpvotes)>0 ? $pdpvotes / ($apcvotes+$pdpvotes) : 0;
+        $gap = round((abs($apcvotes - $pdpvotes) / $allvotes) * 100, 1);
+
         return [
             "success" => true,
             "payload" => [
@@ -88,14 +94,15 @@ class LGAController extends Controller
                 "PDPTotal" => number_format( $pdpvotes ),
                 "diff" => [
                     "difference" => $apcvotes - $pdpvotes,
-                    "apc_perc" => $apcvotes / ($apcvotes+$pdpvotes),
-                    "pdp_perc" => $pdpvotes / ($apcvotes+$pdpvotes)
+                    "gap" => $gap,
+                    "apc_perc" => $apc_perc,
+                    "pdp_perc" => $pdp_perc
                 ],
                 "progress" => [
                     "percentage" => round(($reported_pus/PollingUnit::count()) * 100,2)
                 ],
                 "LGWinners" => $LGA_Winners,
-                "time" => date("H:i:s - dM")
+                "time" => date("dM - h:ia")
             ]
         ];
     }

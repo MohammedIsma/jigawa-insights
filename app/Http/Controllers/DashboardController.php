@@ -46,6 +46,9 @@ class DashboardController extends Controller
     public function scoreboard_dash(){
         return view("dash.scoreboard_dashboard");
     }
+    public function problem_dash(){
+        return view("dash.problem_dashboard");
+    }
     public function spread_dash($lgaid=null, $wardid=null, $puid=null){
         return view("dash.spread_dashboard", compact('lgaid','wardid','puid'));
     }

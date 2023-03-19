@@ -1,39 +1,51 @@
 <template>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="Container">
-
                 <input type="radio" class="radio" name="progress" value="twentyfive" id="twentyfive">
-                <label for="twentyfive" class="label">Reporting Progress - {{ vote_reported_percentage }}%</label>
-
-                <div class="progress">
+                <label for="twentyfive" class="label">Reporting Progress - {{ vote_reported_percentage }}%<br /><small>{{ time }}</small></label>
+                <div class="progress d-none d-md-block">
                     <div class="progress-bar" :style="'width:'+vote_reported_percentage+'%'"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row py-2">
         <div class="col-6 text-end">
-            APC
-            <p class="h3 text-success">{{ APCTotal }}</p>
+            <div class="row m-0 p-0">
+                <div class="col-md-10 text-end">
+                    <img src="/image/ours.png" class="img-fluid" height="200" max />
+                </div>
+                <div class="col-md-2 text-end text-success">
+                    APC
+                    <p class="h3 text-success">{{ APCTotal }}</p>
+                </div>
+            </div>
         </div>
-        <div class="col-6">
-            PDP
-            <p class="h3 text-warning">{{ PDPTotal }}</p>
-        </div>
-        <div class="col-12 text-center">
-            <div class="h6 text-success" :class="{'text-danger': diff<0}">
-                <span v-if="diff>0">+</span>
-                <span v-if="diff<0">-</span>
-                {{ diff }}
+        <div class="col-6 text-start">
+            <div class="row m-0 p-0">
+                <div class="col-md-2 mr-2 text-warning">
+                    PDP
+                    <p class="h3 text-warning">{{ PDPTotal }}</p>
+                </div>
+                <div class="col-md-10">
+                    <img src="/image/theirs.png" class="img-fluid" height="200" />
+                </div>
             </div>
         </div>
     </div>
-    <hr />
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="h4 py-2 bg-success text-white" :class="{'bg-danger': diff<0}">
+                <div v-if="diff>0">+{{ diff }}<br /><small>{{ gap }}%</small></div>
+                <div v-if="diff<0">-{{ diff }}<br /><small>{{ gap }}%</small></div>
+            </div>
+        </div>
+    </div>
     <div class="row m-2">
         <div class="col-12">
             <div class="row m-2">
-                <div class="col-12 col-md-2 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
+                <div class="col-12 col-md-3 text-center mb-2" v-for="LGA in LGWinners" style="color:#bbb;">
                     <div class="card">
                         <div class="card-body" style="height: 100px;" :class="{ 'text-primary':LGA.leading_party}">
                             <div class="row p-0 m-0">
@@ -82,6 +94,7 @@ export default {
                     this.PDPTotal = rData.payload.PDPTotal
                     this.LGWinners = rData.payload.LGWinners
                     this.diff = rData.payload.diff.difference
+                    this.gap = rData.payload.diff.gap
                     this.APCPerc = rData.payload.diff.apc_perc
                     this.PDPPerc = rData.payload.diff.pdp_perc
                     this.vote_reported_percentage = rData.payload.progress.percentage
@@ -92,7 +105,7 @@ export default {
                     this.loading = false
                 }).finally({
             });
-            setTimeout(function () { this.loadLGAs() }.bind(this), 5000)
+            setTimeout(function () { this.loadLGAs() }.bind(this), 20000)
         }
     }
 }
@@ -102,14 +115,14 @@ export default {
 .Container {
     background-color:#444;
     margin: 0;
-    padding: 25px;
+    padding: 10px 0;
     width: 100%;
     text-align: center;
 }
 
 .Container .progress {
     margin: 0 auto;
-    width: 400px;
+    width: 25%;
 }
 
 .progress {

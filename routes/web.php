@@ -30,10 +30,10 @@ Route::get('pull-slips', function() {
     $PS = FetchPUSlips::dispatchSync($PUs);
 });
 
-Route::get('test', [TestController::class, 'test2']);
+Route::get('test', [TestController::class, 'test']);
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 Route::group(["prefix" => "dash-"], function() {
@@ -41,6 +41,7 @@ Route::group(["prefix" => "dash-"], function() {
     Route::get('/accreditation', [DashboardController::class, 'accreditation_dash_1'])->name('accreditation_dash_1');
     Route::get('/tally', [DashboardController::class, 'tally_dash'])->name('tally_dash');
     Route::get('/scoreboard', [DashboardController::class, 'scoreboard_dash'])->name('scoreboard_dash');
+    Route::get('/prob', [DashboardController::class, 'problem_dash'])->name('problem_dash');
     Route::get('/spread/{lga_id?}/{ward_id?}/{pu_id?}', [DashboardController::class, 'spread_dash'])->name('spread_dash');
 });
 
@@ -65,6 +66,9 @@ Route::group(["middleware"=>"auth"], function() {
     Route::get('/submit/agent/{pu_id}', [PollingUnitController::class, 'submit_agent'])->name("submit_agent");
     Route::post('/submit/agent/{pu_id}', [PollingUnitController::class, 'fn_submit_agent'])->name("submit_agent");
     Route::post('/submit/results/{pu_id}', [PollingUnitController::class, 'fn_submit_results'])->name("submit_results");
+    Route::get('/report_issue/{pu_id}', [PollingUnitController::class, 'report_issue'])->name("report_issue");
+    Route::post('/report_issue/{pu_id}', [PollingUnitController::class, 'fn_report_issue'])->name("report_issue");
+    Route::get('/view_issues/{pu_id}', [PollingUnitController::class, 'view_issues'])->name("view_issues");
 
     Route::resource('/officials', OfficialController::class);
     Route::get('/state/officials/{state}', [OfficialController::class, 'officialsByState']);

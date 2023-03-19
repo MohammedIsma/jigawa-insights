@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PollingUnitResource;
+use App\Jobs\UpdateCounts;
 use App\Models\LGA;
+use App\Models\PoliticalParty;
 use App\Models\VotingResult;
 use App\Models\Ward;
 use Illuminate\Http\Request;
@@ -119,5 +122,59 @@ class WardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ajx_get_ward_sheet($wid){
+        $Ward = Ward::findOrFail($wid);
+        $VR = VotingResult::where('ward_id', $wid)->get();
+        $Results = [];
+
+        $parties = getPopularParties();
+
+        foreach ($Ward->PollingUnits as $PU){
+            foreach($parties as $p){
+                $Results[$PU->id][$p->id] = "";
+            }
+        }
+        foreach($VR as $vr){
+            $Results[$vr->polling_unit_id][$vr->political_party_id] = $vr->count;
+        }
+        return [
+            "success" => true,
+            "polling_units" => PollingUnitResource::collection($Ward->PollingUnits),
+            "political_parties" => getPopularParties(),
+            "results" => $Results,
+        ];
+
+    }
+
+    public function ajx_submit_ward_sheet(Request $request, $ward_id){
+        $post = $request->all();
+
+        $Ward = getWard($ward_id);
+
+        foreach($post['Results'] as $pid=>$R){
+            foreach($R as $party_id=>$tally){
+                if($tally==""){
+                    continue;
+                }
+                VotingResult::updateOrCreate([
+                    "state_id" => 1,
+                    "lga_id" => $Ward->lga_id,
+                    "ward_id" => $Ward->id,
+                    "polling_unit_id" => $pid,
+                    "political_party_id" => $party_id,
+                ],[
+                    "count" => $tally,
+                    "user_id" => $post['user_id']
+                ]);
+            }
+        }
+
+        UpdateCounts::dispatch([$ward_id]);
+
+        return response()->json([
+            "success" => true,
+        ]);
     }
 }

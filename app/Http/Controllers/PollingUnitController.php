@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendIncidenceReport;
 use App\Jobs\UpdateCounts;
 use App\Models\AccreditationResult;
+use App\Models\Incident;
+use App\Models\Issue;
 use App\Models\LGA;
 use App\Models\PollingUnit;
 use App\Models\State;
@@ -196,5 +199,49 @@ class PollingUnitController extends Controller
         UpdateCounts::dispatchSync([$PU->ward_id]);
         $r = route("ward.show", $PU->ward_id);
         echo '<a href="'.$r.'">Successful. Click to go back</a>';
+    }
+
+    public function report_issue(Request $request, $pu_id){
+        $PollingUnit = PollingUnit::find($pu_id);
+        return view("pu.report_issue")->with(["PU"=>$PollingUnit]);
+
+    }
+    public function view_issues(Request $request, $pu_id){
+        $PollingUnit = PollingUnit::find($pu_id);
+        return view("pu.view_issues")->with(["PU"=>$PollingUnit]);
+
+    }
+
+    public function fn_report_issue(Request $request, $pu_id){
+        $PollingUnit = PollingUnit::findOrFail($pu_id);
+        $post = $request->all();
+        $report = $post['issue_report'];
+
+        $Issue = Incident::create([
+            "ident" => rand(11111,99999),
+            "state_id" => 1,
+            "lga_id" => $PollingUnit->lga_id,
+            "ward_id" => $PollingUnit->ward_id,
+            "polling_unit_id" => $PollingUnit->id,
+            "user_id" => auth()->user()->id,
+            "description" => $report
+        ]);
+        $PollingUnit = $Issue->PollingUnit;
+
+        $String = sprintf("%s @ %s\n==================\n*%s* LGA, *%s* Ward\nPUnit: %s\nDELIM: %s\nVOTERS: %d\n------------------\n%s",
+            "INCIDENCE REPORT",
+            $Issue->created_at->format("d M h:ia"),
+            ucwords(strtolower($PollingUnit->LGA->name)),
+            ucwords(strtolower($PollingUnit->Ward->name)),
+            $PollingUnit->name,
+            $PollingUnit->number,
+            $PollingUnit->voter_count,
+            $Issue->description,
+        );
+        echo nl2br( $String );
+        echo "<br /><br /><br /><br /><br /><br />";
+        echo "<a href='/states/1'>Home</a>";
+
+
     }
 }

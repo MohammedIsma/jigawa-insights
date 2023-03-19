@@ -17,7 +17,6 @@ class PollingUnitResource extends JsonResource
      */
     public function toArray($request)
     {
-
         $reported = AccreditationResult::where("polling_unit_id", $this->id)->count() > 0;
         $lead_party = $this->leading_party;
         // dd($lead_party);
@@ -25,11 +24,14 @@ class PollingUnitResource extends JsonResource
         $lp = [
             "id" => $this->id,
             "name" => $this->name,
+            "number" => $this->number,
             "voter_count" => $this->voter_count,
             "accredited_count" => number_format($this->accredited_count_1),
             "is_reported" => $reported,
             "turnout" => round(($this->accredited_count_1/$this->voter_count) * 100, 2),
+            "incidents" => []//$this->Incidents
         ];
+//        exit;
 
         if($lead_party){
             $Party = PoliticalParty::find($lead_party->political_party_id);

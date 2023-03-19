@@ -14,6 +14,9 @@ class StateController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->id !== 1){
+            return redirect('/home');
+        }
         $states = State::all();
         $params['States'] = $states;
         return view('states.index', $params);
@@ -48,6 +51,9 @@ class StateController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if(auth()->user()->id !== 1){
+            return redirect('/home');
+        }
         $State = State::findOrFail($id);
         $params['State'] = $State;
         return view('states.show', $params);

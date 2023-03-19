@@ -49,34 +49,37 @@ class UpdateCounts implements ShouldQueue
     {
         foreach($this->PUs as $P){
             $Vr = VotingResult::where('polling_unit_id', $P->id)->sum('count');
-            if($Vr < 1){
-                $P->update(["accredited_count_1"=>0]);
-                AccreditationResult::updateOrCreate([
-                    "state_id" => 1,
-                    "lga_id" => $P->lga_id,
-                    "ward_id" => $P->ward_id,
-                    "polling_unit_id" => $P->id,
-                ],[
-                    "user_id" => auth()->user()->id,
-                    "box_count" => 1,
-                    "voter_count" => $P->voter_count,
-                    "accredited_count" => 0
-                ]);
-            }else{
-                $Ar = AccreditationResult::firstOrCreate([
-                    "state_id" => 1,
-                    "lga_id" => $P->lga_id,
-                    "ward_id" => $P->ward_id,
-                    "polling_unit_id" => $P->id,
-                ],[
-                    "user_id" => 1,
-                    "box_count" => 1,
-                    "voter_count" => $P->voter_count,
-                    "accredited_count" => $Vr
-                ]);
-                $P->update(["accredited_count_1"=>(int)$Vr]);
-            }
+            $Vc = VotingResult::where('polling_unit_id', $P->id)->count();
 
+            if($Vc>0){
+                if($Vr < 1){
+                    $P->update(["accredited_count_1"=>0]);
+                    AccreditationResult::updateOrCreate([
+                        "state_id" => 1,
+                        "lga_id" => $P->lga_id,
+                        "ward_id" => $P->ward_id,
+                        "polling_unit_id" => $P->id,
+                    ],[
+                        "user_id" => auth()->user()->id,
+                        "box_count" => 1,
+                        "voter_count" => $P->voter_count,
+                        "accredited_count" => 0
+                    ]);
+                }else{
+                    $Ar = AccreditationResult::firstOrCreate([
+                        "state_id" => 1,
+                        "lga_id" => $P->lga_id,
+                        "ward_id" => $P->ward_id,
+                        "polling_unit_id" => $P->id,
+                    ],[
+                        "user_id" => 1,
+                        "box_count" => 1,
+                        "voter_count" => $P->voter_count,
+                        "accredited_count" => $Vr
+                    ]);
+                    $P->update(["accredited_count_1"=>(int)$Vr]);
+                }
+            }
         }
 
         foreach($this->Wards as $W){

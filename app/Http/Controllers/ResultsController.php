@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\IncidentResource;
+use App\Models\Incident;
 use App\Models\VotingResult;
 use App\Models\PollingUnit;
 use App\Models\AccreditationResult;
@@ -31,6 +33,14 @@ class ResultsController extends Controller
             "total_votes" => number_format(VotingResult::sum('count')),
             "vote_global_reporting" => $global_report_perc,
             "results" => $VRes
+        ]);
+    }
+
+    public function ajx_incidences(Request $request){
+        $Inc = Incident::orderBy("created_at", "desc")->get();
+        return response()->json([
+            "incidences" => IncidentResource::collection($Inc),
+            "datetime" => date("d-M h:ia")
         ]);
     }
 }

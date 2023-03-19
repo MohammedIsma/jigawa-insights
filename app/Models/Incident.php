@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Incident extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
+
+    public function PollingUnit(){
+        return $this->belongsTo(PollingUnit::class);
+    }
 }

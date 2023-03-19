@@ -23,6 +23,10 @@ class PollingUnit extends Model
         return $this->hasOne(AccreditationResult::class, "polling_unit_id", "id");
     }
 
+    public function Incidents(){
+        return $this->hasMany(Incident::class )->orderBy('created_at', 'desc');
+    }
+
     public function VotingResults(){
         return $this->hasMany(VotingResult::class, "polling_unit_id", "id")->orderBy("count", "desc");
     }

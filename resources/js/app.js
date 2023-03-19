@@ -8,11 +8,16 @@ import { createApp } from 'vue';
 import LGASummary from "./Components/LGASummaryDashboard.vue"
 import SpreadDashboard from "./Components/SpreadDashboard";
 import ScoreboardDashboard from "./Components/ScoreboardDashboard";
+import PollingUnitResultEntry from "./Components/PollingUnitResultEntry.vue";
+import ProblemDashboard from "./Components/ProblemDashboard.vue";
 
 let app=createApp({})
 app.component('lgasummary-dashboard-component', LGASummary);
 app.component('tally-dashboard-component', TallyDashboard);
 app.component('spread-dashboard-component', SpreadDashboard);
 app.component('scoreboard-dashboard-component', ScoreboardDashboard);
+app.component('polling-unit-result-entry', PollingUnitResultEntry);
+app.component('problem-dashboard-component', ProblemDashboard);
+
 app.mount("#vBody");
 

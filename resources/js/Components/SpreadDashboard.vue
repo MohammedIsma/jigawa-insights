@@ -1,10 +1,10 @@
 <template>
     <div class="row p-3" style="background-color: #0c4128;">
         <div class="col-12 text-center mb-2">
-            <a href="/dash/tally" class="text-white mb-2 pb-2" v-if="!displayWard">back to Tally Dashboard</a>
+            <a href="/dash-/tally" class="text-white mb-2 pb-2" v-if="!displayWard">back to Tally Dashboard</a>
             <div class="card">
                 <div class="card-body">
-                    <p class="h4" v-if="!is_loading"><a :href="'/dash/spread/' + LGA.id">{{ LGA.name }} LG</a></p>
+                    <p class="h4" v-if="!is_loading"><a :href="'/dash-/spread/' + LGA.id">{{ LGA.name }} LG</a></p>
                     <p class="h4 text-primary" v-if="is_loading">LOADING...</p>
                 </div>
             </div>
